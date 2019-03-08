@@ -8,6 +8,8 @@ public class BorderExample {
     protected String orderByClause;
 
     protected boolean distinct;
+    protected Integer limit;
+    protected Integer offset;
 
     protected List<Criteria> oredCriteria;
 
@@ -37,6 +39,22 @@ public class BorderExample {
 
     public void or(Criteria criteria) {
         oredCriteria.add(criteria);
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
+
+    public Integer getOffset() {
+        return offset;
+    }
+
+    public void setOffset(Integer offset) {
+        this.offset = offset;
     }
 
     public Criteria or() {

@@ -25,6 +25,8 @@ public class NavController {
     private NewsService newsService;
     @Autowired
     private ActivityService activityService;
+    @Autowired
+    private BorderService borderService;
 
 
     @RequestMapping("/")
@@ -96,9 +98,22 @@ public class NavController {
 
         return modelAndView;
     }
+
+//    待调整impl参数
     @RequestMapping("board")
-    public String toBoard(){
-        return "board";
+    public ModelAndView toBoard(ModelAndView modelAndView,Integer page){
+        modelAndView.setViewName("board");
+        if (page==null){
+            modelAndView.addObject("borders",borderService.listBorder(1));
+            modelAndView.addObject("users",borderService.listBorderUser(1));
+
+        }else{
+            modelAndView.addObject("borders",borderService.listBorder(page));
+            modelAndView.addObject("users",borderService.listBorderUser(page));
+        }
+
+
+        return modelAndView;
     }
 
     @RequestMapping("info")
@@ -106,6 +121,9 @@ public class NavController {
         User user= (User) request.getSession().getAttribute("loginUser");
         if (user!=null){
             modelAndView.addObject("myCommunities", memberService.listUserJoined(user.getIduser()));
+        }else{
+            modelAndView.setViewName("redirect:/");
+            return modelAndView;
         }
         modelAndView.setViewName("info");
         return modelAndView;

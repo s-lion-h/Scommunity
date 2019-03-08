@@ -27,6 +27,18 @@
             <label>注册时间</label><code th:text="${#dates.format(session.loginUser.createtime, 'yyyy-MM-dd HH:mm:ss')}"></code>
             <br>
             <a href="/userLogout" class="btn btn-danger">退出登录</a>
+            <hr>
+            <div class="col-8">
+                <h3>当前头像</h3>
+                <img th:src="${session.loginUser.head}" alt="" class="img-fluid">
+            </div>
+            <hr>
+            <form action="changeHead" method="post" enctype="multipart/form-data">
+                <h3>更换头像</h3>
+                <input type="file" name="headImage">
+                <input type="submit" value="修改头像" class="btn btn-primary">
+            </form>
+
         </div>
         <div class="col-7">
             <h2>我加入的社团</h2>

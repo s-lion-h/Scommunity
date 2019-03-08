@@ -94,25 +94,6 @@
             </div>
 
         </div>
-        <div class="col-4">
-            <h2>社团信息</h2>
-            <hr>
-            <div class="row">
-                <div class="col-4">
-                    <img th:src="${community.logo}" class="img-fluid" alt="">
-                </div>
-                <div class="col-8">
-                    <a th:href="'communityDetail?id='+${community.idcommunity}">
-                        <h3 th:text="${community.name}"></h3>
-                        <hr>
-                    </a>
-                    <label>社团简介:</label>
-                    <p th:text="${community.introduction}"></p>
-                </div>
-            </div>
-
-
-        </div>
     </div>
 </div>
 </body>

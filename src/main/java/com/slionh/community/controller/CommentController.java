@@ -1,8 +1,10 @@
 package com.slionh.community.controller;
 
 import com.slionh.community.entity.Activitycomment;
+import com.slionh.community.entity.Border;
 import com.slionh.community.entity.Newscomment;
 import com.slionh.community.entity.User;
+import com.slionh.community.service.BorderService;
 import com.slionh.community.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 public class CommentController {
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private BorderService borderService;
 
     @PostMapping("addComment")
     public String addComment(String comment, Integer activityId, HttpServletRequest request){
@@ -45,6 +49,17 @@ public class CommentController {
 
         commentService.addNewsComment(newscomment);
         return "redirect:/newsDetail?newsId="+newsId;
+
+    }
+    @PostMapping("addBorder")
+    public String addBorder(Border border,HttpServletRequest request){
+        User user= (User) request.getSession().getAttribute("loginUser");
+        border.setUserid(user.getIduser());
+        if (user==null){
+            return "redirect:/";
+        }
+        borderService.addBorder(border);
+        return "redirect:/board";
 
     }
 }

@@ -1,24 +1,25 @@
 package com.slionh.community.controller;
 
+import com.slionh.community.configuration.Configuration;
 import com.slionh.community.entity.User;
 import com.slionh.community.service.UserService;
+import com.slionh.community.util.ImageUtil;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /*
  * Create by s lion h on 2019/3/6
  */
 @Controller
-public class UserController {
+public class UserController implements Configuration {
     @Autowired
     private UserService userService;
 
@@ -39,7 +40,7 @@ public class UserController {
     @RequestMapping("/userLogin")
     @ResponseBody
     public ModelAndView userLogin(String email, String password, String remember, ModelAndView modelAndView, HttpServletResponse response, HttpServletRequest request){
-        System.out.println(email+password);
+//        System.out.println(email+password);
         User loginUser=userService.login(email, password);
         if (loginUser==null){
             modelAndView.setViewName("redirect:/");
@@ -64,6 +65,25 @@ public class UserController {
             modelAndView.setViewName("redirect:/");
             return modelAndView;
         }
+
+    }
+
+    @PostMapping("changeHead")
+    public String changeHead(@RequestParam("headImage") MultipartFile headImage, HttpServletRequest request) throws IOException {
+        User user= (User) request.getSession().getAttribute("loginUser");
+        if (user==null)
+            return "redirect:/";
+        if (headImage.isEmpty()) {
+            System.out.println("this change request have not image ");
+        } else {
+            System.out.println("ready to change head image");
+            String filename = ImageUtil.saveImg(headImage, IMAGE_PATH);
+            System.out.println("file save up success : " + filename);
+            user.setHead("/image/"+filename);
+            userService.changeHead(user);
+
+        }
+        return "redirect:info";
 
     }
 

@@ -10,4 +10,5 @@ public interface UserService {
     User register(User user);
     Integer addPresident(User user);
     User getInfo(Integer id);
+    Integer changeHead(User user);
 }

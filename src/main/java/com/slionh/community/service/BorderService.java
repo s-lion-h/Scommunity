@@ -1,6 +1,7 @@
 package com.slionh.community.service;
 
 import com.slionh.community.entity.Border;
+import com.slionh.community.entity.User;
 
 import java.util.List;
 
@@ -12,5 +13,7 @@ public interface BorderService {
     Integer deleteBorder(Integer borderId);
     List<Border> listBorder();
     List<Border> listBorder(Integer page);
+    List<User> listBorderUser(Integer page);
+    List<User> listBorderUser();
 
 }
