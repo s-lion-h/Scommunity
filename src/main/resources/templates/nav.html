@@ -1,0 +1,125 @@
+<div th:fragment="nav" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        body {
+            padding-top: 70px;
+        }
+        .nav-link{
+            color: #777;
+        }
+    </style>
+<ul class="nav justify-content-center navbar fixed-top navbar-light bg-light" style="padding-top: 4px;padding-bottom: 4px;">
+    <li class="nav-item">
+        <a id="index" class="nav-link" href="/">主页</a>
+    </li>
+    <li class="nav-item">
+        <a id="news" class="nav-link" href="/news">站内新闻</a>
+    </li>
+    <li class="nav-item">
+        <a id="navActivity" class="nav-link" href="/navActivity">活动列表</a>
+    </li>
+    <li class="nav-item">
+        <a id="navCommunity" class="nav-link" href="/navCommunity" tabindex="-1" aria-disabled="true">社团浏览</a>
+    </li>
+    <li class="nav-item">
+        <a id="board" class="nav-link" href="/board" style="margin-right: 80px;">布告板</a>
+    </li>
+    <li class="nav-item">
+        <th:block th:if="${session.loginUser} == null">
+            <a class='nav-link btn btn-light active' data-toggle='modal' data-target='#myModal'>
+                <!--<img src='img/head.jpg' class='img-rounded userimg'>-->
+                登陆/注册
+            </a>
+        </th:block>
+        <th:block th:if="${session.loginUser} != null">
+            <a class='nav-link btn btn-light active' href="info" th:text="${session.loginUser.realname}"  data-toggle='modal' data-target='#loginModal'></a>
+        </th:block>
+    </li>
+    <li class="nav-item">
+        <th:block th:if="${session.loginUser} != null">
+            <th:block th:if="${session.loginUser.level==10}">
+                <a class='nav-link' href="admin">后台系统</a>
+            </th:block>
+            <th:block th:if="${session.loginUser.level==2}">
+                <a class='nav-link' href="president">社团管理</a>
+            </th:block>
+        </th:block>
+    </li>
+</ul>
+
+<!-- 登陆模态框 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">登陆</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" type="get" action="/userLogin">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Email</span>
+                        </div>
+                        <input type="text" name="email" class="form-control" placeholder="Email">
+                        <!--<input type="email" name="email" class="form-control" placeholder="Email">-->
+                    </div>
+                    <hr>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Password</span>
+                        </div>
+                        <input type="password" name="password" class="form-control"  placeholder="Password">
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-9">
+                        </div>
+                        <div class="checkbox col-3">
+                            <label>
+                                <input type="checkbox" name="remember" value="1"> 记住我
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-9">
+                        </div>
+                        <div class="checkbox col-3">
+                            <button type="submit" class="btn btn-primary">登陆</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <!--<a href="#" target="_blank"><button type="button" class="btn btn-default">admin</button></a>-->
+                <a href="/userLogout" class="btn btn-danger">退出登录</a>
+                <!--<button type="button"  class="btn btn-default" data-dismiss="modal">关闭</button>-->
+                <a href="/register" target="_blank"><button type="button" class="btn btn-info">注册</button> </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 已登陆模态框 -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">做点啥</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label>S-community:社团管理系统</label>
+                <!--<code th:text="${session.loginUser.realname}"></code>-->
+
+            </div>
+            <div class="modal-footer">
+                <a href="/info"><button type="button" class="btn btn-info">去修改我的信息</button> </a>
+                <a href="/userLogout" class="btn btn-danger">退出登录</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

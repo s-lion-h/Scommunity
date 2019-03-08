@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<title>社团管理</title>
+
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
+<link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet">
+
+<style type="text/css">
+    body {
+        background-image:url('/img/desktop.jpg');
+        background-repeat:no-repeat;
+        background-size:cover;
+        background-attachment:fixed;
+        background-position: left top;
+        /*margin-top: 70px;*/
+    }
+    .touming{
+        background-color: rgba(255,255,255,0.9);
+    }
+    #showstage{
+        height: 1300px;
+    }
+    ul>li{
+        margin-bottom: 10px;
+    }
+
+</style>
+
+
+</head>
+
+<body>
+<div class="container-fluid">
+
+<div th:include="nav::nav"></div>
+
+<main>
+    <div class="row">
+        <div class="col-2">
+            <h3 class="text-center">欢迎-admin</h3>
+            <ul class="nav flex-column nav-pills touming">
+                <li><a href="#" class="btn nav-link active" id="notic">社团信息</a></li>
+                <li><a class="btn nav-link" href="#" id="addActivity">发布活动</a></li>
+                <li><a class="btn nav-link" href="#" id="activities">活动列表</a></li>
+                <!--<li><a class="btn nav-link" href="#" id="manageBase">基础信息</a></li>-->
+                <li><a class="btn nav-link" href="#" id="members">成员列表</a></li>
+                <li><a class="btn nav-link" href="#" id="memberApply">申请列表</a></li>
+                <a class="btn btn-danger" href="/userLogout" id="exit">退出</a>
+            </ul>
+        </div>
+        <div class="col-9 date-container touming" id="showstage">
+            <!-- showstage -->
+            <script>
+                $("#showstage").load("description");
+            </script>
+        </div>
+    </div>
+</main>
+</div>
+<script>
+    $(document).ready(function() {
+        $("#notic").click(function() {
+            $("#showstage").load("description");
+        });
+    });
+    $(document).ready(function() {
+        $("#activities").click(function() {
+            $("#showstage").load("activities");
+        });
+    });
+    $(document).ready(function() {
+        $("#addActivity").click(function() {
+            $("#showstage").load("addActivity");
+        });
+    });
+    $(document).ready(function() {
+        $("#communities").click(function() {
+            $("#showstage").load("communities");
+        });
+    });
+    $(document).ready(function() {
+        $("#memberApply").click(function() {
+            $("#showstage").load("memberApply");
+        });
+    });
+    $(document).ready(function() {
+        $("#members").click(function() {
+            $("#showstage").load("/members");
+        });
+    });
+    //----------------------------
+    $('ul.nav > li').click(function(e) {
+        e.preventDefault();
+        $('ul.nav > li').removeClass('active');
+        $(this).addClass('active');
+    });
+
+    $('ul.nav > li >a').click(function(e) {
+        e.preventDefault();
+        $('ul.nav > li > a ').removeClass('active');
+        $(this).addClass('active');
+    });
+
+    /*$(document).ready(function(){
+    $("#showstage").load("manage/notic.html");
+    };*/
+    /*$( "#notic" ).load( "manage/notic.html", function( response, status, xhr ) {
+      $('#notic').html(response);
+    });*/
+    //$("#showstage").load("manage/notic.html");
+</script>
+</body>
+</html>

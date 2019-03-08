@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1>新建社团</h1>
+            <hr>
+        </div>
+        <div class="col-12">
+            <form action="addCommunity" method="post" enctype="multipart/form-data">
+                <p>社团名称</p>
+                <input type="text" name="name" class="form-control" placeholder="社团名称">
+                <hr>
+                <p>社团简述</p>
+                <textarea name="introduction" class="form-control" id="description" rows="5"></textarea>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <p>新建社团账号</p>
+                        <input type="text" name="email" placeholder="新建社团账号" class="form-control">
+                    </div>
+                    <div class="col">
+                        <p>初始密码</p>
+                        <input type="password" name="password" placeholder="初始密码" class="form-control">
+                    </div>
+                </div>
+                <hr>
+                <p>社团负责人</p>
+                <input type="text" name="realname" placeholder="姓名" class="form-control">
+                <hr>
+                <p>社团头像</p>
+                <input type="file" name="headImage">
+                <hr>
+                <input type="submit" class="btn btn-primary">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

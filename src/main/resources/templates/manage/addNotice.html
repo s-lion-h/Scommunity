@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1>新闻编辑</h1>
+            <hr>
+        </div>
+        <div class="col-12">
+                <form action="/addNews" method="post" enctype="multipart/form-data">
+                <p>新闻标题</p>
+                <textarea class="form-control" type="text" placeholder="请输入新闻标题" name="title"></textarea>
+                <hr>
+                <p>新闻内容</p>
+                <textarea class="form-control" rows="5" placeholder="请输入新闻内容" name="content"></textarea>
+                <hr>
+                <p>上传图片</p>
+                <input type="file" name="headImage">
+                <hr>
+                <input type="submit" class="btn btn-primary">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

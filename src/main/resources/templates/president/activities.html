@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1>本社团活动管理</h1>
+        </div>
+        <col-12>
+            <table class="table table-bordered table-hover ">
+                <thead>
+                <tr>
+                    <td>id</td>
+                    <td>标题</td>
+                    <td>开始时间</td>
+                    <td>位置</td>
+                </tr>
+                </thead>
+                </tbody>
+                <th:block th:each="activity:${activities}" >
+                    <tr>
+                        <td th:text="${activity.idactivity}"></td>
+                        <td th:text="${activity.title}"></td>
+                        <td th:text="${activity.starttime}"></td>
+                        <td th:text="${activity.location}"></td>
+                        <td><button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" th:onclick="'selectActivityId='+${activity.idactivity}+';getActivity()'">操作</button></td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </col-12>
+    </div>
+</div>
+<!--修改model-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">修改活动信息</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="/updateActivity" role="form" method="post"  autocomplete="off">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">标题</span>
+                        </div>
+                        <textarea id="title" rows="2" name="title" class="form-control"></textarea>
+                    </div>
+                    <hr>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">内容</span>
+                        </div>
+                        <textarea id="description" rows="5" name="description" class="form-control"></textarea>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <div class="">
+                            <input name="source" type="hidden" id="b" value="contact" />
+                            <input name="idnews" type="hidden" id="idnews"/>
+                            <input type="submit" id="change" class="btn btn-outline-success btn-center btn-font-lg" value="修改活动"></input>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭这里</button>
+                <button id="deleteId" class="btn btn-danger" onclick="deleteActivity()">删除此活动</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var selectActivityId=0;
+    function deleteActivity(){
+        // var recipient = button.data('whatever')
+        // alert(selectContact)
+        window.location.href="deleteActivityId?id="+selectActivityId;
+    }
+    function getActivity() {
+        $.ajax({
+            type:'POST',
+            url:'getActivity?id='+selectActivityId,
+            success:function (data) {
+                console.log(data)
+                $("#title").val(data.title)
+                $("#description").val(data.description)
+            }
+        })
+    }
+</script>
+</body>
+</html>

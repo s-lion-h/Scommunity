@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>navCommunity</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet">
+    <style>
+        .label-bottom{
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div th:include="nav::nav"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <h2>我已加入的社团</h2>
+            <hr>
+            <th:block th:if="${session.loginUser} == null">
+                <a class='nav-link btn btn-light' data-toggle='modal' data-target='#myModal'>
+                    登陆之后才可以看到自己社团哦
+                </a>
+            </th:block>
+            <th:block th:if="${session.loginUser} != null">
+                <th:block th:each="community:${myCommunities}">
+                    <div class="label-bottom">
+                        <a th:href="'communityDetail?id='+${community.idcommunity}" target="_blank">
+                            <div class="row">
+                                <div class="col-4">
+                                    <img th:src="${community.logo}" class="img-fluid" alt="">
+                                </div>
+                                <div class="col-8">
+                                    <h3 th:text="${community.name}"></h3>
+                                    <hr>
+                                    <p th:text="${community.introduction}"></p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </th:block>
+                <th:block th:if="${#lists.size(myCommunities)} == 0">
+                    <h4 class="text-info">暂未加入社团哦</h4>
+                </th:block>
+            </th:block>
+        </div>
+        <div class="col-9">
+            <h2>社团列表</h2>
+            <hr>
+            <div class="row">
+                <th:block th:each="community:${communities}">
+                    <div class="col-6 label-bottom">
+                        <a th:href="'communityDetail?id='+${community.idcommunity}" target="_blank">
+                        <div class="row">
+                            <div class="col-4">
+                                <img th:src="${community.logo}" class="img-fluid" alt="">
+                            </div>
+                            <div class="col-8">
+                                <h3 th:text="${community.name}"></h3>
+                                <hr>
+                                <p th:text="${community.introduction}"></p>
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("#navCommunity").addClass("btn btn-secondary active")
+
+</script>
+</body>
+</html>

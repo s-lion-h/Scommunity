@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1>申请列表</h1>
+            <hr>
+        </div>
+        <col-12>
+            <table class="table table-bordered table-hover ">
+                <thead>
+                <tr>
+                    <td>id</td>
+                    <td>姓名</td>
+                    <td>联系方式</td>
+                    <td>操作</td>
+                </tr>
+                </thead>
+                <tbody>
+
+                <th:block th:each="user:${users}" >
+                    <tr>
+                        <td th:text="${user.iduser}"></td>
+                        <td th:text="${user.realname}"></td>
+                        <td th:text="${user.phone}"></td>
+                        <td><a th:href="'accessApply?uid='+${user.iduser}"><button class="btn btn-danger">通过申请</button></a></td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+            <th:block th:if="${#lists.size(users)==0}">
+                <h2 class="text-danger">暂时没有人正在申请</h2>
+
+            </th:block>
+        </col-12>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1>基础信息修改</h1>
+            <hr>
+        </div>
+        <div class="col-12">
+            <form action="updateBase" method="post">
+                <p>网站介绍</p>
+                <textarea class="form-control" name="introduction" id="description" rows="5" th:text="${description.introduction}">
+                </textarea>
+                <hr>
+                <p>联系电话</p>
+                <input class="form-control" type="text" name="phone" th:value="${description.phone}">
+                <hr>
+                <p>联系地址</p>
+                <textarea class="form-control" name="address" type="text" rows="2" th:text="${description.address}">广东药科大学学生社团联合会
+                </textarea>
+                <hr>
+                <input type="submit" class="btn btn-primary" value="修改">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

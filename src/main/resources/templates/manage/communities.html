@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1>社团管理</h1>
+            <hr>
+        </div>
+        <div class="col-12">
+            <table class="table table-bordered table-hover ">
+                <thead>
+                <tr>
+                    <td>id</td>
+                    <td>社团名称</td>
+                    <td>社长</td>
+                    <td>添加者</td>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="community:${communities}" >
+                    <tr>
+                        <td th:text="${community.idcommunity}"></td>
+                        <td th:text="${community.name}"></td>
+                        <td th:text="${community.other}"></td>
+                        <td>管理员</td>
+                        <td><button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" th:onclick="'selectCommunityId='+${community.idcommunity}+';getCommunity()'">操作</button></td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+<!--修改model-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">更改新闻</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="/updateCommunity" role="form" method="post"  autocomplete="off">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">名称</span>
+                        </div>
+                        <textarea id="name" rows="1" name="name" class="form-control"></textarea>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">简介</span>
+                        </div>
+                        <textarea id="introduction" rows="1" name="introduction" class="form-control"></textarea>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">负责人id</span>
+                        </div>
+                        <textarea id="president" rows="1" name="president" class="form-control"></textarea>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">联系方式</span>
+                        </div>
+                        <textarea id="teacherphone" rows="1" name="teacherphone" class="form-control"></textarea>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">成立时间</span>
+                        </div>
+                        <textarea id="createtime" rows="1" class="form-control"></textarea>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">社团图标</span>
+                        </div>
+                        <textarea id="logo" rows="2" name="logo" class="form-control"></textarea>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <div class="">
+                            <input name="source" type="hidden" id="b" value="contact" />
+                            <input name="idcommunity" type="hidden" id="idcommunity"/>
+                            <input type="submit" id="change" class="btn btn-outline-success btn-center btn-font-lg" value="修改信息"></input>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭这里</button>
+                <button id="deleteId" class="btn btn-danger" onclick="deleteCommunity()">删除此社团</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var selectCommunityId=0;
+    function deleteCommunity(){
+        // var recipient = button.data('whatever')
+        // alert(selectContact)
+        window.location.href="deleteCommunity?id="+selectCommunityId;
+    }
+    function getCommunity() {
+        $.ajax({
+            type:'GET',
+            url:'getCommunity?id='+selectCommunityId,
+            success:function (data) {
+                console.log(data)
+                $("#idcommunity").val(data.idcommunity)
+                $("#introduction").val(data.introduction)
+                $("#createtime").val(data.createtime)
+                $("#logo").val(data.logo)
+                $("#name").val(data.name)
+                $("#president").val(data.president)
+                $("#teacherphone").val(data.teacherphone)
+
+            }
+        })
+    }
+</script>
+</body>
+</html>

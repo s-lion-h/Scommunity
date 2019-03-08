@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>info</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet">
+    <style>
+
+    </style>
+</head>
+<body>
+<div th:include="nav::nav"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-5">
+            <h2>我的基本信息</h2>
+            <hr>
+            <label>姓名:</label><code th:text="${session.loginUser.realname}"></code>
+            <br>
+            <label>个人id:</label><code th:text="${session.loginUser.iduser}"></code>
+            <br>
+            <label>邮箱:</label><code th:text="${session.loginUser.email}"></code>
+            <br>
+            <label>等级:</label><code th:text="${session.loginUser.level}"></code>
+            <br>
+            <label>注册时间</label><code th:text="${#dates.format(session.loginUser.createtime, 'yyyy-MM-dd HH:mm:ss')}"></code>
+            <br>
+            <a href="/userLogout" class="btn btn-danger">退出登录</a>
+        </div>
+        <div class="col-7">
+            <h2>我加入的社团</h2>
+            <hr>
+            <th:block th:if="${#lists.size(myCommunities)} == 0">
+                <h4 class="text-info">暂未加入社团哦</h4>
+            </th:block>
+            <th:block th:each="community:${myCommunities}">
+                <div class="label-bottom">
+                    <a th:href="'communityDetail?id='+${community.idcommunity}" target="_blank">
+                        <div class="row">
+                            <div class="col-4">
+                                <img th:src="${community.logo}" class="img-fluid" alt="">
+                            </div>
+                            <div class="col-8">
+                                <h3 th:text="${community.name}"></h3>
+                                <hr>
+                                <p th:text="${community.introduction}"></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </th:block>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

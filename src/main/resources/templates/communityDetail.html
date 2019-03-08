@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>CommunityDetail</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet">
+    <style>
+        .label-bottom{
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div th:include="nav::nav"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <h2>我的社团</h2>
+            <hr>
+            <th:block th:if="${session.loginUser} == null">
+                <a class='nav-link btn btn-light' data-toggle='modal' data-target='#myModal'>
+                    <button class="btn btn-primary">申请加入</button>
+                    <button class="btn btn-default">登陆后才可以看到自己社团哦</button>
+                </a>
+            </th:block>
+            <th:block th:if="${session.loginUser} != null">
+                <th:block th:if="${status} == 3">
+                    <a><button class="btn btn-secondary">已加入此社团</button></a>
+                </th:block>
+                <th:block th:if="${status} == 0">
+                    <a th:href="'/joinCommunity?communityId='+${community.idcommunity}"><button class="btn btn-primary">申请加入此社团</button></a>
+                </th:block>
+                <th:block th:if="${status} == 1">
+                    <a><button class="btn btn-info">已申请申请</button></a>
+                </th:block>
+                <th:block th:if="${status} == 2">
+                    <a><button class="btn btn-danger">被拒绝了哦</button></a>
+                </th:block>
+            </th:block>
+        </div>
+        <div class="col-9">
+            <h2>社团信息</h2>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <img th:src="${community.logo}" class="img-fluid" alt="">
+                </div>
+                <div class="col-8">
+                    <h3 th:text="${community.name}"></h3>
+                    <hr>
+                    <label>社团负责人:</label>
+                    <code th:text="${president.realname}"></code>
+                    <br>
+                    <label>联系电话:</label>
+                    <code th:text="${president.phone}"></code>
+                    <br>
+                    <hr>
+                    <label>社团简介:</label>
+                    <p th:text="${community.introduction}"></p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <h3>本社团的活动</h3>
+                <th:block class="row" th:each="activity:${activities}">
+
+                </th:block>
+                <table class="table table-bordered table-hover ">
+                    <thead>
+                    <tr>
+                        <td>活动时间</td>
+                        <td>标题</td>
+                        <td>位置</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="activity:${activities}" >
+                        <tr>
+                            <td th:text="${activity.starttime}"></td>
+                            <td th:text="${activity.title}"></td>
+                            <td th:text="${activity.location}"></td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

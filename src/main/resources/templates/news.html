@@ -1,0 +1,58 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>站内新闻</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet">
+    <style>
+
+    </style>
+</head>
+<body>
+<div th:include="nav::nav"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <hr>
+                <label>网站介绍:</label>
+                <p>广东药科大学学生社团联合会简称“校社联”，成立于2000年3月，是在校团委领导下，管理学校50多个学生社团的机构。</p>
+                <hr>
+                <label>联系电话:</label>
+                <p>14345678902</p>
+                <hr>
+                <label>联系地址:</label>
+                <p>广东药科大学学生社团联合会</p>
+            </div>
+            <div class="col-9">
+                <h2>站内消息</h2>
+                <hr>
+                <table class="table table-bordered table-hover ">
+                    <thead>
+                    <tr>
+                        <td>id</td>
+                        <td>标题</td>
+                        <td>发布时间</td>
+                        <td>发布者</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="news:${newses}" >
+                        <tr>
+                            <td th:text="${news.idnews}"></td>
+                            <td><a th:text="${news.title}" th:href="'newsDetail?newsId='+${news.idnews}"></a></td>
+                            <td th:text="${news.createtime}"></td>
+                            <td>管理员</td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+<script>
+    $("#news").addClass("btn btn-secondary active")
+
+</script>
+</body>
+</html>
