@@ -26,7 +26,7 @@
 <div th:include="nav::nav"></div>
 <div class="container">
     <div class="row">
-        <div class="col-12" style="background-color: rgba(177,223,227,0.7)">
+        <div class="col-12" style="background-color: rgba(255,255,255,0.7)">
 
             <div class="container">
                 <h2>相关评论</h2>
@@ -48,8 +48,41 @@
                 </form>
                 <hr>
 
-                <!--<p class="text-center text-primary">以上为热门评论</p>-->
-                <!--<hr>-->
+                <th:block th:each="border:${borderTops}" >
+                    <div class="row">
+                        <div class="col-md-2">
+                            <th:block th:switch="${border.userid}">
+                                <th:block th:each="user : ${borderTopUsers}">
+                                    <img th:case="${user.iduser}" th:src="${user.head}" class="img-fluid rounded-circle"/>
+                                </th:block>
+                            </th:block>
+                            <!--<img class="img-responsive img-circle" alt="" src="/ueditor/jsp/upload/head/head.jpg">-->
+                        </div>
+                        <div class="col-7">
+                            <th:block th:switch="${border.userid}">
+                                <th:block th:each="user : ${borderTopUsers}">
+                                    <code class="namefont" th:case="${user.iduser}" th:text="${user.realname}"></code>
+                                </th:block>
+                            </th:block>
+                            <p class="content" th:text="${border.content}"></p>
+                            <p class="diary-time" th:text="${#dates.format(border.createtime, 'yyyy年MM月dd HH:mm')}"></p>
+                        </div>
+                        <div class="col-3">
+                            <th:block th:if="${session.loginUser}!= null">
+                                <th:block th:if="${session.loginUser.level}==10">
+                                    <a th:href="'deleteBorderTop?borderId='+${border.idborder}">
+                                        <button class="btn btn-secondary">取消置顶</button>
+                                    </a>
+                                </th:block>
+                            </th:block>
+                        </div>
+                    </div>
+                    <hr>
+                </th:block>
+
+                <p class="text-center text-primary">以上为热门评论</p>
+                <hr>
+
                 <th:block th:each="border:${borders}" >
                     <div class="row">
                         <div class="col-md-2">
@@ -72,7 +105,7 @@
                         <div class="col-3">
                             <th:block th:if="${session.loginUser}!= null">
                                 <th:block th:if="${session.loginUser.level}==10">
-                                    <a href="#">
+                                    <a th:href="'addBorderTop?borderId='+${border.idborder}">
                                         <button class="btn btn-secondary">置顶留言</button>
                                     </a>
                                     <a th:href="'deleteBorder?borderId='+${border.idborder}">

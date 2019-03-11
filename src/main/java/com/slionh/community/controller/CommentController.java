@@ -73,4 +73,24 @@ public class CommentController {
         borderService.deleteBorder(borderId);
         return "redirect:/board";
     }
+
+    @RequestMapping("addBorderTop")
+    public String addBorderTop(Integer borderId,HttpServletRequest request){
+        User user= (User) request.getSession().getAttribute("loginUser");
+        if (user==null||user.getLevel()!=10){
+            return "redirect:/board";
+        }
+        borderService.addBorderTop(borderId);
+        return "redirect:/board";
+    }
+
+    @RequestMapping("deleteBorderTop")
+    public String deleteBorderTop(Integer borderId,HttpServletRequest request){
+        User user= (User) request.getSession().getAttribute("loginUser");
+        if (user==null||user.getLevel()!=10){
+            return "redirect:/board";
+        }
+        borderService.deleteBordertop(borderId);
+        return "redirect:/board";
+    }
 }

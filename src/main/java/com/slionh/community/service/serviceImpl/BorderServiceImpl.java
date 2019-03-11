@@ -2,6 +2,7 @@ package com.slionh.community.service.serviceImpl;
 
 import com.slionh.community.entity.*;
 import com.slionh.community.mapper.BorderMapper;
+import com.slionh.community.mapper.BordertopMapper;
 import com.slionh.community.mapper.UserMapper;
 import com.slionh.community.service.BorderService;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ public class BorderServiceImpl implements BorderService {
     private BorderMapper borderMapper;
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private BordertopMapper bordertopMapper;
 
     @Override
     public Integer addBorder(Border border) {
@@ -74,5 +77,41 @@ public class BorderServiceImpl implements BorderService {
         }
         System.out.println(userList.toString());
         return userList;
+    }
+
+    @Override
+    public List<Border> listBorderTop() {
+        List<Border> borders=new ArrayList<Border>();
+        for (Bordertop bordertop:bordertopMapper.selectByExample(new BordertopExample())){
+            borders.add(borderMapper.selectByPrimaryKey(bordertop.getBorderid()));
+        }
+        return borders;
+    }
+
+    @Override
+    public List<User> listBorderTopUser() {
+        List<User> userList=new ArrayList<User>();
+        List<Integer> users=new ArrayList<Integer>();
+        for (Border border:listBorderTop()){
+            if (!users.contains(border.getUserid())){
+                users.add(border.getUserid());
+                userList.add(userMapper.selectByPrimaryKey(border.getUserid()));
+            }
+        }
+        return userList;
+    }
+
+    @Override
+    public Integer addBorderTop(Integer borderId) {
+        Bordertop bordertop=new Bordertop();
+        bordertop.setBorderid(borderId);
+        return bordertopMapper.insert(bordertop);
+    }
+
+    @Override
+    public Integer deleteBordertop(Integer borderId) {
+        BordertopExample bordertopExample=new BordertopExample();
+        bordertopExample.createCriteria().andBorderidEqualTo(borderId);
+        return bordertopMapper.deleteByExample(bordertopExample);
     }
 }

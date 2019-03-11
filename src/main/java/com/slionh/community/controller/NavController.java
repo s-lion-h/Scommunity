@@ -106,10 +106,14 @@ public class NavController {
         if (page==null){
             modelAndView.addObject("borders",borderService.listBorder(1));
             modelAndView.addObject("users",borderService.listBorderUser(1));
+            modelAndView.addObject("borderTops",borderService.listBorderTop());
+            modelAndView.addObject("borderTopUsers",borderService.listBorderTopUser());
 
         }else{
             modelAndView.addObject("borders",borderService.listBorder(page));
             modelAndView.addObject("users",borderService.listBorderUser(page));
+            modelAndView.addObject("borderTops",borderService.listBorderTop());
+            modelAndView.addObject("borderTopUsers",borderService.listBorderTopUser());
         }
 
 
