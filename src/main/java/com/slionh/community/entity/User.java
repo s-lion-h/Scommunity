@@ -21,6 +21,10 @@ public class User {
 
     private Date createtime;
 
+    private String sex;
+
+    private String schoolnumber;
+
     public Integer getIduser() {
         return iduser;
     }
@@ -93,6 +97,22 @@ public class User {
         this.createtime = createtime;
     }
 
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex == null ? null : sex.trim();
+    }
+
+    public String getSchoolnumber() {
+        return schoolnumber;
+    }
+
+    public void setSchoolnumber(String schoolnumber) {
+        this.schoolnumber = schoolnumber == null ? null : schoolnumber.trim();
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -105,6 +125,8 @@ public class User {
                 ", head='" + head + '\'' +
                 ", other='" + other + '\'' +
                 ", createtime=" + createtime +
+                ", sex='" + sex + '\'' +
+                ", schoolnumber='" + schoolnumber + '\'' +
                 '}';
     }
 }

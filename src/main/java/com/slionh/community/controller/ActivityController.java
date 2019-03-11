@@ -69,4 +69,11 @@ public class ActivityController {
         activityService.deleteActivity(id);
         return "redirect:/president";
     }
+
+    @PostMapping("updateActivity")
+    public String updateActivity(Activity activity){
+        activityService.updateActivity(activity);
+        return "redirect:/president";
+    }
+
 }

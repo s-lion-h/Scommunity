@@ -27,18 +27,46 @@
                         <td th:text="${user.iduser}"></td>
                         <td th:text="${user.realname}"></td>
                         <td th:text="${user.phone}"></td>
-                        <td><button class="btn btn-danger" disabled>暂无操作</button></td>
+                        <td><button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" th:onclick="'selectMemberId='+${user.iduser}">删除社员</button></td>
                     </tr>
                 </th:block>
                 </tbody>
             </table>
             <th:block th:if="${#lists.size(members)==0}">
                 <h2 class="text-danger">暂时没有人正在申请</h2>
-
             </th:block>
             </table>
         </col-12>
     </div>
 </div>
+
+<!--修改model-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">确认删除？</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                真的要删除吗？
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭这里</button>
+                <button id="deleteId" class="btn btn-danger" onclick="deleteActivity()">确认删除</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var selectMemberId=0;
+    function deleteActivity(){
+        // var recipient = button.data('whatever')
+        // alert(selectContact)
+        window.location.href="deleteMember?memberId="+selectMemberId;
+    }
+</script>
 </body>
 </html>

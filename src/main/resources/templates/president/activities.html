@@ -24,7 +24,7 @@
                 <th:block th:each="activity:${activities}" >
                     <tr>
                         <td th:text="${activity.idactivity}"></td>
-                        <td th:text="${activity.title}"></td>
+                        <td><a target="_blank" th:href="'activityDetail?activityId='+${activity.idactivity}" th:text="${activity.title}"></a</td>
                         <td th:text="${activity.starttime}"></td>
                         <td th:text="${activity.location}"></td>
                         <td><button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" th:onclick="'selectActivityId='+${activity.idactivity}+';getActivity()'">操作</button></td>
@@ -61,10 +61,24 @@
                         <textarea id="description" rows="5" name="description" class="form-control"></textarea>
                     </div>
                     <hr>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">位置</span>
+                        </div>
+                        <textarea id="location" rows="3" name="location" class="form-control"></textarea>
+                    </div>
+                    <hr>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">经纬度</span>
+                        </div>
+                        <input type="text" id="position" rows="5" name="description" class="form-control"></input>
+                    </div>
+                    <hr>
                     <div class="form-group">
                         <div class="">
                             <input name="source" type="hidden" id="b" value="contact" />
-                            <input name="idnews" type="hidden" id="idnews"/>
+                            <input name="idactivity" type="hidden" id="idactivity"/>
                             <input type="submit" id="change" class="btn btn-outline-success btn-center btn-font-lg" value="修改活动"></input>
                         </div>
                     </div>
@@ -92,6 +106,9 @@
                 console.log(data)
                 $("#title").val(data.title)
                 $("#description").val(data.description)
+                $("#idactivity").val(data.idactivity)
+                $("#position").val(data.position)
+                $("#location").val(data.location)
             }
         })
     }

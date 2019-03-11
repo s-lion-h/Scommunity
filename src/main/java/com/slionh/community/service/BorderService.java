@@ -15,5 +15,7 @@ public interface BorderService {
     List<Border> listBorder(Integer page);
     List<User> listBorderUser(Integer page);
     List<User> listBorderUser();
+    List<Border> listBorderTop();
+
 
 }

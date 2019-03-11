@@ -45,9 +45,9 @@
         <!--<table schema="scommunity" tableName="activity">-->
             <!--<generatedKey column="idActivity" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
-        <!--<table schema="scommunity" tableName="activityComment">-->
-            <!--<generatedKey column="idActivityComment" sqlStatement="Mysql" identity="true"/>-->
-        <!--</table>-->
+        <table schema="scommunity" tableName="borderTop">
+            <generatedKey column="idborderTop" sqlStatement="Mysql" identity="true"/>
+        </table>
         <!--<table schema="scommunity" tableName="activityMember">-->
             <!--<generatedKey column="idActivityMember" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
@@ -66,8 +66,8 @@
         <!--<table schema="scommunity" tableName="user">-->
             <!--<generatedKey column="idUser" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
-        <table schema="scommunity" tableName="border">
-            <generatedKey column="idborder" sqlStatement="Mysql" identity="true"/>
-        </table>
+        <!--<table schema="scommunity" tableName="border">-->
+            <!--<generatedKey column="idborder" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
     </context>
 </generatorConfiguration>

@@ -11,6 +11,8 @@
     <result column="head" property="head" jdbcType="VARCHAR" />
     <result column="other" property="other" jdbcType="VARCHAR" />
     <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="schoolNumber" property="schoolnumber" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    idUser, email, password, realname, phone, level, head, other, createTime
+    idUser, email, password, realname, phone, level, head, other, createTime, sex, schoolNumber
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.slionh.community.entity.UserExample" >
     select
@@ -85,6 +87,14 @@
     </if>
     <if test="orderByClause != null" >
       order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -109,10 +119,12 @@
     </selectKey>
     insert into user (email, password, realname, 
       phone, level, head, 
-      other, createTime)
+      other, createTime, sex, 
+      schoolNumber)
     values (#{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{head,jdbcType=VARCHAR}, 
-      #{other,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP})
+      #{other,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{sex,jdbcType=VARCHAR}, 
+      #{schoolnumber,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.slionh.community.entity.User" >
     <selectKey resultType="java.lang.Integer" keyProperty="iduser" order="AFTER" >
@@ -144,6 +156,12 @@
       <if test="createtime != null" >
         createTime,
       </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="schoolnumber != null" >
+        schoolNumber,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="email != null" >
@@ -169,6 +187,12 @@
       </if>
       <if test="createtime != null" >
         #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolnumber != null" >
+        #{schoolnumber,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -208,6 +232,12 @@
       <if test="record.createtime != null" >
         createTime = #{record.createtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolnumber != null" >
+        schoolNumber = #{record.schoolnumber,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -223,7 +253,9 @@
       level = #{record.level,jdbcType=INTEGER},
       head = #{record.head,jdbcType=VARCHAR},
       other = #{record.other,jdbcType=VARCHAR},
-      createTime = #{record.createtime,jdbcType=TIMESTAMP}
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      schoolNumber = #{record.schoolnumber,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -255,6 +287,12 @@
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolnumber != null" >
+        schoolNumber = #{schoolnumber,jdbcType=VARCHAR},
+      </if>
     </set>
     where idUser = #{iduser,jdbcType=INTEGER}
   </update>
@@ -267,7 +305,9 @@
       level = #{level,jdbcType=INTEGER},
       head = #{head,jdbcType=VARCHAR},
       other = #{other,jdbcType=VARCHAR},
-      createTime = #{createtime,jdbcType=TIMESTAMP}
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      sex = #{sex,jdbcType=VARCHAR},
+      schoolNumber = #{schoolnumber,jdbcType=VARCHAR}
     where idUser = #{iduser,jdbcType=INTEGER}
   </update>
 </mapper>

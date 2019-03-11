@@ -82,6 +82,7 @@
                 <li><a href="#" class="btn nav-link" id="notic">发布新闻</a></li>
                 <li><a class="btn nav-link" href="#" id="managenews">新闻管理</a></li>
                 <li><a class="btn nav-link" href="#" id="manageBase">基础信息</a></li>
+                <li><a class="btn nav-link" href="#" id="manageUser">学生管理</a></li>
                 <li><a class="btn nav-link" href="#" id="communities">社团管理</a></li>
                 <li><a class="btn nav-link" href="#" id="addCommunity">新建社团</a></li>
                 <a class="btn btn-danger" href="/userLogout">退出登陆</a>
@@ -120,6 +121,11 @@
     $(document).ready(function() {
         $("#addCommunity").click(function() {
             $("#showstage").load("addCommunity");
+        });
+    });
+    $(document).ready(function() {
+        $("#manageUser").click(function() {
+            $("#showstage").load("manageUser");
         });
     });
     //----------------------------

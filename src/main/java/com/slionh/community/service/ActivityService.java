@@ -21,4 +21,6 @@ public interface ActivityService {
     List<User> listCommentSUserById(Integer activityId);
     List<User> listCommentsUserByIdForSwitch(Integer activityId);
     Integer deleteActivity(Integer activityId);
+    Integer updateActivity(Activity activityId);
+    Integer getAmountByActivity(Integer activityId);
 }

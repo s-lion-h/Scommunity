@@ -30,6 +30,15 @@ public class MemberController {
         Community community= (Community) request.getSession().getAttribute("community");
         memberService.accessApply(uid, community.getIdcommunity());
         return "redirect:/president";
+    }
+
+    @RequestMapping("deleteMember")
+    public String deleteMember(Integer memberId,HttpServletRequest request){
+        Community community= (Community) request.getSession().getAttribute("community");
+        if (community==null)
+            return "redirect:/president";
+            memberService.deleteMember(community.getIdcommunity(),memberId);
+        return "redirect:/president";
 
     }
 }

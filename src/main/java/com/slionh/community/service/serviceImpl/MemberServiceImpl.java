@@ -113,4 +113,11 @@ public class MemberServiceImpl implements MemberService {
         member.setStatus(3);
         return memberMapper.updateByPrimaryKeySelective(member);
     }
+
+    @Override
+    public Integer deleteMember(Integer communityId, Integer memberId) {
+        MemberExample memberExample=new MemberExample();
+        memberExample.createCriteria().andCommunityidEqualTo(communityId).andUseridEqualTo(memberId);
+        return memberMapper.deleteByExample(memberExample);
+    }
 }

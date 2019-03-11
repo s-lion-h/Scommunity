@@ -87,5 +87,42 @@ public class UserController implements Configuration {
 
     }
 
+    @PostMapping("updateUser")
+    public String updateUser(HttpServletRequest request,User user){
+        System.out.println("updating user : "+user);
+        User loginUser= (User) request.getSession().getAttribute("loginUser");
+        if (user==null)
+            return "redirect:/";
+
+        user.setIduser(loginUser.getIduser());
+        User updatedUser = userService.updateUserSelective(user);
+        request.getSession().removeAttribute("loginUser");
+        request.getSession().setAttribute("loginUser",updatedUser);
+        return "redirect:/info";
+
+
+    }
+
+    @PostMapping("changeUser")
+    public String changeUser(HttpServletRequest request,User user){
+        System.out.println("changing user : "+user);
+
+        User updatedUser = userService.updateUserSelective(user);
+        return "redirect:/admin";
+
+
+    }
+
+    @RequestMapping("getUser")
+    @ResponseBody
+    public User getUser(HttpServletRequest request,Integer id){
+        return userService.getInfo(id);
+    }
+
+    @RequestMapping("deleteUser")
+    public String deleteUser(HttpServletRequest request,Integer id){
+        userService.deleteUserById(id);
+        return "redirect:/admin";
+    }
 
 }

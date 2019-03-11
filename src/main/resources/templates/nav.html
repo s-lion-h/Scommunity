@@ -6,8 +6,17 @@
         .nav-link{
             color: #777;
         }
+        .myNav {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            padding-left: 0;
+            margin-bottom: 0;
+            list-style: none;
+        }
     </style>
-<ul class="nav justify-content-center navbar fixed-top navbar-light bg-light" style="padding-top: 4px;padding-bottom: 4px;">
+<ul class="myNav justify-content-center navbar fixed-top navbar-light bg-light" style="padding-top: 4px;padding-bottom: 4px;">
     <li class="nav-item">
         <a id="index" class="nav-link" href="/">主页</a>
     </li>
@@ -21,7 +30,7 @@
         <a id="navCommunity" class="nav-link" href="/navCommunity" tabindex="-1" aria-disabled="true">社团浏览</a>
     </li>
     <li class="nav-item">
-        <a id="board" class="nav-link" href="/board" style="margin-right: 80px;">布告板</a>
+        <a id="board" class="nav-link" href="/board" style="margin-right: 80px;">留言板</a>
     </li>
     <li class="nav-item">
         <th:block th:if="${session.loginUser} == null">

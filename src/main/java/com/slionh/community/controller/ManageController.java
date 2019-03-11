@@ -6,6 +6,7 @@ import com.slionh.community.mapper.NewsMapper;
 import com.slionh.community.service.BaseMsgService;
 import com.slionh.community.service.CommunityService;
 import com.slionh.community.service.NewsService;
+import com.slionh.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,8 @@ public class ManageController {
     private BaseMsgService baseMsgService;
     @Autowired
     private CommunityService communityService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("addNotice")
     public String toAddNotice(){
@@ -53,6 +56,14 @@ public class ManageController {
     public ModelAndView toCommunities(ModelAndView modelAndView){
         modelAndView.setViewName("manage/communities");
         modelAndView.addObject("communities",communityService.listCommunity());
+        return modelAndView;
+    }
+
+    @RequestMapping("manageUser")
+    public ModelAndView toManageUser(ModelAndView modelAndView){
+        modelAndView.setViewName("manage/manageUser");
+
+        modelAndView.addObject("userList",userService.listUser(null));
         return modelAndView;
     }
 

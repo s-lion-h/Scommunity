@@ -17,4 +17,5 @@ public interface MemberService {
     Integer getUserCommunityStatus(Integer uid,Integer communityId);
     Integer addUserApply(Integer uid,Integer communityId,String description);
     Integer accessApply(Integer uid,Integer communityId);
+    Integer deleteMember(Integer communityId,Integer memberId);
 }

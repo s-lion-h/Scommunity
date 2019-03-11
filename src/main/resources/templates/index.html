@@ -84,18 +84,19 @@
         <div class="col-4">
             <h2><a href="news">站内消息</a></h2>
             <hr>
-            <table class="table table-bordered table-hover ">
-                <thead>
+            <table class="table">
+                <thead class="">
                 <tr>
-                    <td>标题</td>
-                    <td>发布时间</td>
+                    <th>标题</th>
+                    <th>发布时间</th>
                 </tr>
                 </thead>
                 <tbody>
                 <th:block th:each="news:${newses}" >
                     <tr>
                         <td><a th:text="${news.title}" th:href="'newsDetail?newsId='+${news.idnews}"></a></td>
-                        <td th:text="${news.createtime}"></td>
+                        <td th:text="${#dates.format(news.createtime, 'yyyy年MM月dd')}"></td>
+
                     </tr>
                 </th:block>
                 </tbody>

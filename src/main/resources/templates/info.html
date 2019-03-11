@@ -14,7 +14,8 @@
 <div class="container">
     <div class="row">
         <div class="col-5">
-            <h2>我的基本信息</h2>
+            <!--<form action=""></form>-->
+            <h2>基本信息</h2>
             <hr>
             <label>姓名:</label><code th:text="${session.loginUser.realname}"></code>
             <br>
@@ -41,6 +42,71 @@
 
         </div>
         <div class="col-7">
+            <h2>修改详细信息</h2>
+            <hr>
+            <form action="/updateUser" method="post">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="-sizing">你的id</span>
+                    </div>
+                    <input th:value="${session.loginUser.iduser}" type="text" class="form-control" aria-label="Sizing example input" disabled aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing">邮箱</span>
+                    </div>
+                    <input th:value="${session.loginUser.email}" name="email" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup">姓名</span>
+                    </div>
+                    <input th:value="${session.loginUser.realname}" type="text" name="realname" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-default">手机</span>
+                    </div>
+                    <input th:value="${session.loginUser.phone}" type="text" name="phone" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="default">学号</span>
+                    </div>
+                    <input th:value="${session.loginUser.schoolnumber}" type="text" name="schoolnumber" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="efault">性别</span>
+                    </div>
+                    <!--<input th:value="${session.loginUser.sex}" type="text" name="sex" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">-->
+
+                    <th:block th:if="${session.loginUser.sex} == '男'">
+                        <!--<label class="my-1 mr-2" for="inlineFormCustomSelectPref">Preference</label>-->
+                        <select name="sex" class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                            <option value="男" selected>男</option>
+                            <option value="女">女</option>
+                        </select>
+                    </th:block>
+                    <th:block th:if="${session.loginUser.sex} == '女'">
+                        <!--<input class="form-control" type="radio" name="sex" value="男" style="width: 18px;">-->
+                        <!--<label class="">男</label>-->
+                        <!--<input class="form-control" type="radio" name="sex" value="女" checked style="width: 18px;">-->
+                        <!--<label class="">女</label>-->
+                        <select name="sex" class="custom-select my-1 mr-sm-2" id="inlineForelectPref">
+                            <option value="男" name="sex" >男</option>
+                            <option value="女" name="sex" selected>女</option>
+                        </select>
+                    </th:block>
+
+                </div>
+                <div class="input-group mb-3">
+                    <input type="submit" class="btn btn-primary btn-center" value="确认修改">
+                </div>
+            </form>
+
+
             <h2>我加入的社团</h2>
             <hr>
             <th:block th:if="${#lists.size(myCommunities)} == 0">

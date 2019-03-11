@@ -58,8 +58,19 @@ public class CommentController {
         if (user==null){
             return "redirect:/";
         }
+        if (border.getContent()==null||border.getContent().equals(""))
+            return "redirect:/board";
+
         borderService.addBorder(border);
         return "redirect:/board";
-
+    }
+    @RequestMapping("deleteBorder")
+    public String deleteBorder(Integer borderId,HttpServletRequest request){
+        User user= (User) request.getSession().getAttribute("loginUser");
+        if (user==null||user.getLevel()!=10){
+            return "redirect:/board";
+        }
+        borderService.deleteBorder(borderId);
+        return "redirect:/board";
     }
 }

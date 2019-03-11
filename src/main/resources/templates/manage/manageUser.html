@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1>学生管理</h1>
+            <hr>
+            <table class="table table-bordered table-hover ">
+                <thead>
+                <tr>
+                    <td>id</td>
+                    <td>姓名</td>
+                    <td>学号</td>
+                    <td>手机</td>
+                    <td>注册时间</td>
+                    <td>性别</td>
+                    <td>角色</td>
+                    <td>状态</td>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="user:${userList}" >
+                    <tr>
+                        <td th:text="${user.iduser}"></td>
+                        <td th:text="${user.realname}"></td>
+                        <td th:text="${user.schoolnumber}"></td>
+                        <td th:text="${user.phone}"></td>
+                        <td th:text="${#dates.format(user.createtime, 'yyyy年MM月dd HH:mm')}"></td>
+                        <td th:text="${user.sex}"></td>
+                        <th:block th:switch="${user.level}">
+                            <td th:case="1">学生</td>
+                            <td th:case="2">社长</td>
+                            <td th:case="10">管理员</td>
+                        </th:block>
+                        <td th:if="${user.other}==1" class="text-success">正常</td>
+                        <td th:if="${user.other}==2" class="text-danger">封禁</td>
+                        <td><button class="btn btn-info" data-toggle="modal" data-target="#exampleModal" th:data-whatever="${user.iduser}" th:onclick="'selectUserId='+${user.iduser}+';getUser()'">操作</button></td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--修改model-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">修改学生信息</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="/changeUser" role="form" method="post"  autocomplete="off">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">学生id</span>
+                        </div>
+                        <input id="id" class="form-control" disabled/>
+                    </div>
+                    <hr>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">姓名</span>
+                        </div>
+                        <input id="realname"  name="realname" class="form-control"/>
+                    </div>
+                    <hr>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">学号</span>
+                        </div>
+                        <input id="schoolnumber"  name="schoolnumber" class="form-control"/>
+                    </div>
+                    <hr>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">手机</span>
+                        </div>
+                        <input id="phone" name="phone" class="form-control"/>
+                    </div>
+                    <hr>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">状态</span>
+                        </div>
+                        <!--<label class="">女</label>-->
+                        <select name="other" class="custom-select my-1 mr-sm-2" id="inlineForelectPref">
+                            <option value="1">正常</option>
+                            <option value="2">封禁</option>
+                        </select>
+                    </div>
+                    <hr>
+                    <hr>
+                    <div class="form-group">
+                        <div class="">
+                            <input name="source" type="hidden" id="b" value="contact" />
+                            <input name="iduser" type="hidden" id="iduser"/>
+                            <input type="submit" id="change" class="btn btn-outline-success btn-center btn-font-lg" value="修改学生信息"></input>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭这里</button>
+                <button id="deleteId" class="btn btn-danger" onclick="deleteUser()">删除此学生</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var selectUserId=0;
+    function deleteUser(){
+        // var recipient = button.data('whatever')
+        // alert(selectContact)
+        window.location.href="deleteUser?id="+selectUserId;
+    }
+    function getUser(){
+        $.ajax({
+            type:'GET',
+            url:'getUser?id='+selectUserId,
+            success:function (data) {
+                console.log(data)
+                $("#id").val(data.iduser)
+                $("#realname").val(data.realname)
+                $("#schoolnumber").val(data.schoolnumber)
+                $("#phone").val(data.phone)
+                $("#iduser").val(data.iduser)
+                $("#other").val(data.other)
+
+            }
+        })
+    }
+
+</script>
+</body>
+</html>

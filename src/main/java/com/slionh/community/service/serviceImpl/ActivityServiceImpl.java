@@ -103,4 +103,15 @@ public class ActivityServiceImpl implements ActivityService {
     public Integer deleteActivity(Integer activityId) {
         return activityMapper.deleteByPrimaryKey(activityId);
     }
+
+    @Override
+    public Integer updateActivity(Activity activityId) {
+        return activityMapper.updateByPrimaryKeySelective(activityId);
+    }
+
+    @Override
+    public Integer getAmountByActivity(Integer activityId) {
+//        ActivityExample
+        return null;
+    }
 }

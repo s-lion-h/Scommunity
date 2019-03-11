@@ -26,22 +26,24 @@
             <div class="col-9">
                 <h2>站内消息</h2>
                 <hr>
-                <table class="table table-bordered table-hover ">
-                    <thead>
-                    <tr>
-                        <td>id</td>
-                        <td>标题</td>
-                        <td>发布时间</td>
-                        <td>发布者</td>
-                    </tr>
-                    </thead>
+                <table class="table">
+                    <!--<thead class="">-->
+                    <!--<tr>-->
+                        <!--<th scope="col">id</th >-->
+                        <!--<th scope="col">标题</th >-->
+                        <!--<th scope="col">发布时间</th >-->
+                        <!--&lt;!&ndash;<th scope="col">发布者</th >&ndash;&gt;-->
+                    <!--</tr>-->
+                    <!--</thead>-->
                     <tbody>
                     <th:block th:each="news:${newses}" >
                         <tr>
                             <td th:text="${news.idnews}"></td>
                             <td><a th:text="${news.title}" th:href="'newsDetail?newsId='+${news.idnews}"></a></td>
-                            <td th:text="${news.createtime}"></td>
-                            <td>管理员</td>
+                            <!--<td th:text="${news.createtime}"></td>-->
+                            <td th:text="${#dates.format(news.createtime, 'yyyy年MM月dd HH:mm')}"></td>
+
+                            <!--<td>管理员</td>-->
                         </tr>
                     </th:block>
                     </tbody>

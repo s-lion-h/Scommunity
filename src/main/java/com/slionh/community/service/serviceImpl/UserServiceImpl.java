@@ -58,4 +58,25 @@ public class UserServiceImpl implements UserService {
     public Integer changeHead(User user) {
         return userMapper.updateByPrimaryKeySelective(user);
     }
+
+    @Override
+    public User updateUserSelective(User user) {
+        userMapper.updateByPrimaryKeySelective(user);
+        return userMapper.selectByPrimaryKey(user.getIduser());
+    }
+
+    @Override
+    public List<User> listUser(Integer page) {
+        UserExample userExample=new UserExample();
+//        userExample.setOffset(page-1);
+//        userExample.setLimit(page*20);
+
+
+        return userMapper.selectByExample(userExample);
+    }
+
+    @Override
+    public Integer deleteUserById(Integer id) {
+        return userMapper.deleteByPrimaryKey(id);
+    }
 }

@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.slionh.community.entity.Activitymember" >
     <id column="idActivityMember" property="idactivitymember" jdbcType="INTEGER" />
     <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="activityId" property="activityid" jdbcType="VARCHAR" />
     <result column="score" property="score" jdbcType="INTEGER" />
     <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    idActivityMember, userId, score, createTime
+    idActivityMember, userId, activityId, score, createTime
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.slionh.community.entity.ActivitymemberExample" >
     select
@@ -102,10 +103,10 @@
     <selectKey resultType="java.lang.Integer" keyProperty="idactivitymember" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into activityMember (userId, score, createTime
-      )
-    values (#{userid,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}
-      )
+    insert into activityMember (userId, activityId, score, 
+      createTime)
+    values (#{userid,jdbcType=INTEGER}, #{activityid,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.slionh.community.entity.Activitymember" >
     <selectKey resultType="java.lang.Integer" keyProperty="idactivitymember" order="AFTER" >
@@ -115,6 +116,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userid != null" >
         userId,
+      </if>
+      <if test="activityid != null" >
+        activityId,
       </if>
       <if test="score != null" >
         score,
@@ -126,6 +130,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userid != null" >
         #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="activityid != null" >
+        #{activityid,jdbcType=VARCHAR},
       </if>
       <if test="score != null" >
         #{score,jdbcType=INTEGER},
@@ -150,6 +157,9 @@
       <if test="record.userid != null" >
         userId = #{record.userid,jdbcType=INTEGER},
       </if>
+      <if test="record.activityid != null" >
+        activityId = #{record.activityid,jdbcType=VARCHAR},
+      </if>
       <if test="record.score != null" >
         score = #{record.score,jdbcType=INTEGER},
       </if>
@@ -165,6 +175,7 @@
     update activityMember
     set idActivityMember = #{record.idactivitymember,jdbcType=INTEGER},
       userId = #{record.userid,jdbcType=INTEGER},
+      activityId = #{record.activityid,jdbcType=VARCHAR},
       score = #{record.score,jdbcType=INTEGER},
       createTime = #{record.createtime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -176,6 +187,9 @@
     <set >
       <if test="userid != null" >
         userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="activityid != null" >
+        activityId = #{activityid,jdbcType=VARCHAR},
       </if>
       <if test="score != null" >
         score = #{score,jdbcType=INTEGER},
@@ -189,6 +203,7 @@
   <update id="updateByPrimaryKey" parameterType="com.slionh.community.entity.Activitymember" >
     update activityMember
     set userId = #{userid,jdbcType=INTEGER},
+      activityId = #{activityid,jdbcType=VARCHAR},
       score = #{score,jdbcType=INTEGER},
       createTime = #{createtime,jdbcType=TIMESTAMP}
     where idActivityMember = #{idactivitymember,jdbcType=INTEGER}
