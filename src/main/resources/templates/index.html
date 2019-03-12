@@ -7,6 +7,14 @@
         .label-bottom{
             margin-bottom: 20px;
         }
+        .publicDetail{
+            /*超过一行就省略号*/
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+        }
     </style>
 
 
@@ -65,18 +73,18 @@
             <div class="row">
                 <th:block th:each="community:${communities}">
                     <div class="col-6 label-bottom">
-                        <a th:href="'communityDetail?id='+${community.idcommunity}" target="_blank">
-                            <div class="row">
-                                <div class="col-4">
-                                    <img th:src="${community.logo}" class="img-fluid" alt="">
-                                </div>
-                                <div class="col-8">
-                                    <h3 th:text="${community.name}"></h3>
-                                    <hr>
-                                    <p th:text="${community.introduction}"></p>
-                                </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <img th:src="${community.logo}" class="img-fluid" alt="">
                             </div>
-                        </a>
+                            <div class="col-8">
+                                <a th:href="'communityDetail?id='+${community.idcommunity}" target="_blank">
+                                    <h3 th:text="${community.name}"></h3>
+                                </a>
+                                <hr>
+                                <p class="publicDetail" th:text="${community.introduction}"></p>
+                            </div>
+                        </div>
                     </div>
                 </th:block>
             </div>
@@ -128,7 +136,9 @@
                     <tr>
                         <td th:text="${activity.position}"></td>
                         <td><a th:href="'activityDetail?activityId='+${activity.idactivity}" th:text="${activity.title}"></a></td>
-                        <td th:text="${activity.starttime}"></td>
+                        <!--<td th:text="${activity.starttime}"></td>-->
+                        <td th:text="${#dates.format(activity.starttime, 'MM月dd')}"></td>
+
                         <td th:text="${activity.location}"></td>
                     </tr>
                 </th:block>

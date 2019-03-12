@@ -52,7 +52,16 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public List<Activity> listActivity(Integer num) {
-        return activityMapper.selectByExample(new ActivityExample());
+//        return activityMapper.selectByExample(new ActivityExample());
+        List<Activity> list = activityMapper.selectByExample(new ActivityExample());
+        List<Activity> activities=new ArrayList<Activity>();
+        for(Activity activity:list){
+            if (activities.size()>4)
+                return activities;
+            activity.setPosition(communityMapper.selectByPrimaryKey(activity.getCommunityid()).getName());
+            activities.add(activity);
+        }
+        return activities;
     }
 
     @Override

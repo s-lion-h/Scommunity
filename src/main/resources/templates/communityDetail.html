@@ -77,7 +77,10 @@
                     <tbody>
                     <th:block th:each="activity:${activities}" >
                         <tr>
-                            <td th:text="${activity.starttime}"></td>
+                            <!--<td th:text="${activity.starttime}"></td>-->
+                            <td th:text="${#dates.format(activity.starttime, 'yyyy年MM月dd HH:mm')}"></td>
+                            <!--<p class="diary-time" th:text="${#dates.format(border.createtime, 'yyyy年MM月dd HH:mm')}"></p>-->
+
                             <td th:text="${activity.title}"></td>
                             <td th:text="${activity.location}"></td>
                         </tr>
