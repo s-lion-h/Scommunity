@@ -154,4 +154,52 @@ public class ActivityServiceImpl implements ActivityService {
             return 0;
         }
     }
+
+    @Override
+    public Integer getActivityScoreByUser(Integer userId, Integer activityId) {
+        ActivitymemberExample activitymemberExample=new ActivitymemberExample();
+        activitymemberExample.createCriteria().andActivityidEqualTo(activityId).andUseridEqualTo(userId);
+        List<Activitymember> list = activitymemberMapper.selectByExample(activitymemberExample);
+        if (list.size()>0){
+            return list.get(0).getScore();
+        }
+        return null;
+    }
+
+    @Override
+    public Integer getActivityScoreAvg(Integer activityId) {
+        ActivitymemberExample activitymemberExample=new ActivitymemberExample();
+        activitymemberExample.createCriteria().andActivityidEqualTo(activityId);
+        List<Activitymember> list = activitymemberMapper.selectByExample(activitymemberExample);
+        Integer scoreSum=0;
+        for (Activitymember activitymember:list){
+            System.out.println(list.toString());
+            if (activitymember.getScore()==null)
+                break;
+            scoreSum = scoreSum + activitymember.getScore();
+        }
+        if (scoreSum==0){
+            return 0;
+        }else{
+//            System.out.println(scoreSum);
+//            System.out.println(list.size());
+//            System.out.println(scoreSum/list.size());
+//            System.out.println(Math.round((float)scoreSum/list.size()));
+            return Math.round((float)scoreSum/list.size());
+        }
+
+    }
+
+    @Override
+    public Integer setActivityScore(Activitymember activitymember) {
+        ActivitymemberExample activitymemberExample=new ActivitymemberExample();
+        activitymemberExample.createCriteria().andActivityidEqualTo(activitymember.getActivityid()).andUseridEqualTo(activitymember.getUserid());
+        List<Activitymember> list=activitymemberMapper.selectByExample(activitymemberExample);
+        if (list.size()==0){
+            return activitymemberMapper.insert(activitymember);
+        }else{
+            activitymember.setIdactivitymember(list.get(0).getIdactivitymember());
+            return activitymemberMapper.updateByPrimaryKey(activitymember);
+        }
+    }
 }

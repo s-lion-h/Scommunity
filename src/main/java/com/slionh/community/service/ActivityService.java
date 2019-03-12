@@ -1,9 +1,6 @@
 package com.slionh.community.service;
 
-import com.slionh.community.entity.Activity;
-import com.slionh.community.entity.Activitycomment;
-import com.slionh.community.entity.Community;
-import com.slionh.community.entity.User;
+import com.slionh.community.entity.*;
 
 import java.util.List;
 
@@ -26,4 +23,7 @@ public interface ActivityService {
     Integer joinActivity(Integer userId,Integer activityId);
     Integer exitActivity(Integer userId,Integer activityId);
     Integer getActivityMemberStatus(Integer userId,Integer activityId);
+    Integer getActivityScoreByUser(Integer userId,Integer activityId);
+    Integer getActivityScoreAvg(Integer activityId);
+    Integer setActivityScore(Activitymember activitymember);
 }

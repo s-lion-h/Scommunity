@@ -1,6 +1,7 @@
 package com.slionh.community.controller;
 
 import com.slionh.community.entity.Activity;
+import com.slionh.community.entity.Activitymember;
 import com.slionh.community.entity.Community;
 import com.slionh.community.entity.User;
 import com.slionh.community.service.ActivityService;
@@ -53,6 +54,7 @@ public class ActivityController {
 
         }else{
             modelAndView.addObject("status", activityService.getActivityMemberStatus(user.getIduser(), activityId));
+            modelAndView.addObject("myScore", activityService.getActivityScoreByUser(user.getIduser(), activityId));
 
         }
         modelAndView.setViewName("activityDetail");
@@ -63,6 +65,7 @@ public class ActivityController {
         modelAndView.addObject("comments",activityService.getCommentsByActivityId(activityId));
 //        modelAndView.addObject("userList",activityService.listCommentSUserById(activityId));
         modelAndView.addObject("users",activityService.listCommentsUserByIdForSwitch(activityId));
+        modelAndView.addObject("generalScore",activityService.getActivityScoreAvg(activityId));
 
 
         return modelAndView;
@@ -97,5 +100,16 @@ public class ActivityController {
         User user= (User) request.getSession().getAttribute("loginUser");
         activityService.exitActivity(user.getIduser(),activityId);
         return "redirect:/activityDetail?activityId="+activityId;
+    }
+
+    @PostMapping("setActivityScore")
+    public String setActivityScore(Activitymember activitymember, HttpServletRequest request){
+        User user= (User) request.getSession().getAttribute("loginUser");
+        if (user==null)
+            return "redirect:/";
+
+        activitymember.setUserid(user.getIduser());
+        activityService.setActivityScore(activitymember);
+        return "redirect:/activityDetail?activityId="+activitymember.getActivityid();
     }
 }
