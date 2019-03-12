@@ -48,8 +48,17 @@ public class ActivityController {
 
     @RequestMapping("activityDetail")
     public ModelAndView activityDetail(ModelAndView modelAndView,HttpServletRequest request,Integer activityId){
+        User user= (User) request.getSession().getAttribute("loginUser");
+        if (user==null){
+
+        }else{
+            modelAndView.addObject("status", activityService.getActivityMemberStatus(user.getIduser(), activityId));
+
+        }
         modelAndView.setViewName("activityDetail");
+
         modelAndView.addObject("community",activityService.getCommunityByActivityId(activityId));
+        modelAndView.addObject("amount",activityService.getAmountByActivity(activityId));
         modelAndView.addObject("activity",activityService.getActivity(activityId));
         modelAndView.addObject("comments",activityService.getCommentsByActivityId(activityId));
 //        modelAndView.addObject("userList",activityService.listCommentSUserById(activityId));
@@ -76,4 +85,17 @@ public class ActivityController {
         return "redirect:/president";
     }
 
+    @RequestMapping("joinActivity")
+    public String updateActivity(Integer activityId,HttpServletRequest request){
+        User user= (User) request.getSession().getAttribute("loginUser");
+        activityService.joinActivity(user.getIduser(),activityId);
+        return "redirect:/activityDetail?activityId="+activityId;
+    }
+
+    @RequestMapping("exitActivity")
+    public String exitActivity(Integer activityId,HttpServletRequest request){
+        User user= (User) request.getSession().getAttribute("loginUser");
+        activityService.exitActivity(user.getIduser(),activityId);
+        return "redirect:/activityDetail?activityId="+activityId;
+    }
 }

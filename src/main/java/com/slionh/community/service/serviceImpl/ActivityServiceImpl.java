@@ -1,10 +1,7 @@
 package com.slionh.community.service.serviceImpl;
 
 import com.slionh.community.entity.*;
-import com.slionh.community.mapper.ActivityMapper;
-import com.slionh.community.mapper.ActivitycommentMapper;
-import com.slionh.community.mapper.CommunityMapper;
-import com.slionh.community.mapper.UserMapper;
+import com.slionh.community.mapper.*;
 import com.slionh.community.service.ActivityService;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +11,8 @@ import java.util.List;
 
 /*
  * Create by s lion h on 2019/3/7
+ * status=1已参加
+ * status=0未参加
  */
 @Service
 public class ActivityServiceImpl implements ActivityService {
@@ -25,6 +24,8 @@ public class ActivityServiceImpl implements ActivityService {
     private ActivitycommentMapper activitycommentMapper;
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private ActivitymemberMapper activitymemberMapper;
 
     @Override
     public Integer addActivity(Activity activity) {
@@ -120,7 +121,37 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public Integer getAmountByActivity(Integer activityId) {
+        ActivitymemberExample activitymemberExample=new ActivitymemberExample();
+        activitymemberExample.createCriteria().andActivityidEqualTo(activityId);
 //        ActivityExample
-        return null;
+        return activitymemberMapper.selectByExample(activitymemberExample).size();
+    }
+
+    @Override
+    public Integer joinActivity(Integer userId, Integer activityId) {
+        Activitymember activitymember=new Activitymember();
+        activitymember.setUserid(userId);
+        activitymember.setActivityid(activityId);
+
+        return activitymemberMapper.insert(activitymember);
+    }
+
+    @Override
+    public Integer exitActivity(Integer userId, Integer activityId) {
+        ActivitymemberExample activitymemberExample=new ActivitymemberExample();
+        activitymemberExample.createCriteria().andUseridEqualTo(userId).andActivityidEqualTo(activityId);
+
+        return activitymemberMapper.deleteByExample(activitymemberExample);
+    }
+
+    @Override
+    public Integer getActivityMemberStatus(Integer userId, Integer activityId) {
+        ActivitymemberExample activitymemberExample=new ActivitymemberExample();
+        activitymemberExample.createCriteria().andActivityidEqualTo(activityId).andUseridEqualTo(userId);
+        if (activitymemberMapper.selectByExample(activitymemberExample).size()>0){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 }

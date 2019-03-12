@@ -7,7 +7,7 @@ public class Activitymember {
 
     private Integer userid;
 
-    private String activityid;
+    private Integer activityid;
 
     private Integer score;
 
@@ -29,12 +29,12 @@ public class Activitymember {
         this.userid = userid;
     }
 
-    public String getActivityid() {
+    public Integer getActivityid() {
         return activityid;
     }
 
-    public void setActivityid(String activityid) {
-        this.activityid = activityid == null ? null : activityid.trim();
+    public void setActivityid(Integer activityid) {
+        this.activityid = activityid;
     }
 
     public Integer getScore() {

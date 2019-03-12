@@ -7,6 +7,7 @@ import com.slionh.community.service.BaseMsgService;
 import com.slionh.community.service.CommunityService;
 import com.slionh.community.service.NewsService;
 import com.slionh.community.service.UserService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -77,6 +78,16 @@ public class ManageController {
         webdescription.setIdwebdescription(1);
         baseMsgService.updateWebDescription(webdescription);
         return "redirect:/admin";
+    }
+    @PostMapping("updateBase2")
+    @ResponseBody
+    public String updateBase2(Webdescription webdescription,ModelAndView modelAndView){
+        webdescription.setIdwebdescription(1);
+        baseMsgService.updateWebDescription(webdescription);
+//        modelAndView.setViewName("manage/manageBase");
+//        modelAndView.addObject("description",baseMsgService.getWebDescription());
+        return "success";
+//        return "manage/manageBase";
     }
     @RequestMapping("getCommunity")
     @ResponseBody

@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.slionh.community.entity.Activitymember" >
     <id column="idActivityMember" property="idactivitymember" jdbcType="INTEGER" />
     <result column="userId" property="userid" jdbcType="INTEGER" />
-    <result column="activityId" property="activityid" jdbcType="VARCHAR" />
+    <result column="activityId" property="activityid" jdbcType="INTEGER" />
     <result column="score" property="score" jdbcType="INTEGER" />
     <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -105,7 +105,7 @@
     </selectKey>
     insert into activityMember (userId, activityId, score, 
       createTime)
-    values (#{userid,jdbcType=INTEGER}, #{activityid,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, 
+    values (#{userid,jdbcType=INTEGER}, #{activityid,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, 
       #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.slionh.community.entity.Activitymember" >
@@ -132,7 +132,7 @@
         #{userid,jdbcType=INTEGER},
       </if>
       <if test="activityid != null" >
-        #{activityid,jdbcType=VARCHAR},
+        #{activityid,jdbcType=INTEGER},
       </if>
       <if test="score != null" >
         #{score,jdbcType=INTEGER},
@@ -158,7 +158,7 @@
         userId = #{record.userid,jdbcType=INTEGER},
       </if>
       <if test="record.activityid != null" >
-        activityId = #{record.activityid,jdbcType=VARCHAR},
+        activityId = #{record.activityid,jdbcType=INTEGER},
       </if>
       <if test="record.score != null" >
         score = #{record.score,jdbcType=INTEGER},
@@ -175,7 +175,7 @@
     update activityMember
     set idActivityMember = #{record.idactivitymember,jdbcType=INTEGER},
       userId = #{record.userid,jdbcType=INTEGER},
-      activityId = #{record.activityid,jdbcType=VARCHAR},
+      activityId = #{record.activityid,jdbcType=INTEGER},
       score = #{record.score,jdbcType=INTEGER},
       createTime = #{record.createtime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -189,7 +189,7 @@
         userId = #{userid,jdbcType=INTEGER},
       </if>
       <if test="activityid != null" >
-        activityId = #{activityid,jdbcType=VARCHAR},
+        activityId = #{activityid,jdbcType=INTEGER},
       </if>
       <if test="score != null" >
         score = #{score,jdbcType=INTEGER},
@@ -203,7 +203,7 @@
   <update id="updateByPrimaryKey" parameterType="com.slionh.community.entity.Activitymember" >
     update activityMember
     set userId = #{userid,jdbcType=INTEGER},
-      activityId = #{activityid,jdbcType=VARCHAR},
+      activityId = #{activityid,jdbcType=INTEGER},
       score = #{score,jdbcType=INTEGER},
       createTime = #{createtime,jdbcType=TIMESTAMP}
     where idActivityMember = #{idactivitymember,jdbcType=INTEGER}

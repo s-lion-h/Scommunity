@@ -45,12 +45,12 @@
         <!--<table schema="scommunity" tableName="activity">-->
             <!--<generatedKey column="idActivity" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
-        <table schema="scommunity" tableName="borderTop">
-            <generatedKey column="idborderTop" sqlStatement="Mysql" identity="true"/>
-        </table>
-        <!--<table schema="scommunity" tableName="activityMember">-->
-            <!--<generatedKey column="idActivityMember" sqlStatement="Mysql" identity="true"/>-->
+        <!--<table schema="scommunity" tableName="borderTop">-->
+            <!--<generatedKey column="idborderTop" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
+        <table schema="scommunity" tableName="activityMember">
+            <generatedKey column="idActivityMember" sqlStatement="Mysql" identity="true"/>
+        </table>
         <!--<table schema="scommunity" tableName="community">-->
             <!--<generatedKey column="idCommunity" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->

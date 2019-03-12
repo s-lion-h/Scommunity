@@ -12,22 +12,45 @@
             <hr>
         </div>
         <div class="col-12">
-            <form action="updateBase" method="post">
+            <!--<form action="updateBase2" method="post">-->
                 <p>网站介绍</p>
                 <textarea class="form-control" name="introduction" id="description" rows="5" th:text="${description.introduction}">
                 </textarea>
                 <hr>
                 <p>联系电话</p>
-                <input class="form-control" type="text" name="phone" th:value="${description.phone}">
+                <input class="form-control" type="text" name="phone" id="phone" th:value="${description.phone}">
                 <hr>
                 <p>联系地址</p>
-                <textarea class="form-control" name="address" type="text" rows="2" th:text="${description.address}">广东药科大学学生社团联合会
+                <textarea class="form-control" id="address" name="address" type="text" rows="2" th:text="${description.address}">广东药科大学学生社团联合会
                 </textarea>
                 <hr>
-                <input type="submit" class="btn btn-primary" value="修改">
-            </form>
+                <input type="hidden" name="source" value="manageBase">
+                <button onclick="changeMsg()" class="btn btn-primary">修改</button>
+                <!--<input type="submit" class="btn btn-primary" value="修改">-->
+            <!--</form>-->
         </div>
     </div>
 </div>
+<script>
+    function changeMsg(){
+        $.ajax({
+            type:'POST',
+            url:'/updateBase2',
+            data:{
+                introduction:$("#description").val(),
+                phone:$("#phone").val(),
+                address:$("#address").val(),
+            },
+            success:function (result) {
+                $("#showstage").load("manageBase");
+                if (result=='success') {
+                    alert("修改成功")
+                }else{
+                    alert("修改失败")
+                }
+            }
+        })
+    }
+</script>
 </body>
 </html>

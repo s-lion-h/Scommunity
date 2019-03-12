@@ -235,62 +235,52 @@ public class ActivitymemberExample {
             return (Criteria) this;
         }
 
-        public Criteria andActivityidEqualTo(String value) {
+        public Criteria andActivityidEqualTo(Integer value) {
             addCriterion("activityId =", value, "activityid");
             return (Criteria) this;
         }
 
-        public Criteria andActivityidNotEqualTo(String value) {
+        public Criteria andActivityidNotEqualTo(Integer value) {
             addCriterion("activityId <>", value, "activityid");
             return (Criteria) this;
         }
 
-        public Criteria andActivityidGreaterThan(String value) {
+        public Criteria andActivityidGreaterThan(Integer value) {
             addCriterion("activityId >", value, "activityid");
             return (Criteria) this;
         }
 
-        public Criteria andActivityidGreaterThanOrEqualTo(String value) {
+        public Criteria andActivityidGreaterThanOrEqualTo(Integer value) {
             addCriterion("activityId >=", value, "activityid");
             return (Criteria) this;
         }
 
-        public Criteria andActivityidLessThan(String value) {
+        public Criteria andActivityidLessThan(Integer value) {
             addCriterion("activityId <", value, "activityid");
             return (Criteria) this;
         }
 
-        public Criteria andActivityidLessThanOrEqualTo(String value) {
+        public Criteria andActivityidLessThanOrEqualTo(Integer value) {
             addCriterion("activityId <=", value, "activityid");
             return (Criteria) this;
         }
 
-        public Criteria andActivityidLike(String value) {
-            addCriterion("activityId like", value, "activityid");
-            return (Criteria) this;
-        }
-
-        public Criteria andActivityidNotLike(String value) {
-            addCriterion("activityId not like", value, "activityid");
-            return (Criteria) this;
-        }
-
-        public Criteria andActivityidIn(List<String> values) {
+        public Criteria andActivityidIn(List<Integer> values) {
             addCriterion("activityId in", values, "activityid");
             return (Criteria) this;
         }
 
-        public Criteria andActivityidNotIn(List<String> values) {
+        public Criteria andActivityidNotIn(List<Integer> values) {
             addCriterion("activityId not in", values, "activityid");
             return (Criteria) this;
         }
 
-        public Criteria andActivityidBetween(String value1, String value2) {
+        public Criteria andActivityidBetween(Integer value1, Integer value2) {
             addCriterion("activityId between", value1, value2, "activityid");
             return (Criteria) this;
         }
 
-        public Criteria andActivityidNotBetween(String value1, String value2) {
+        public Criteria andActivityidNotBetween(Integer value1, Integer value2) {
             addCriterion("activityId not between", value1, value2, "activityid");
             return (Criteria) this;
         }

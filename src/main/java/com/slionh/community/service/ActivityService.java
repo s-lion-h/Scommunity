@@ -23,4 +23,7 @@ public interface ActivityService {
     Integer deleteActivity(Integer activityId);
     Integer updateActivity(Activity activityId);
     Integer getAmountByActivity(Integer activityId);
+    Integer joinActivity(Integer userId,Integer activityId);
+    Integer exitActivity(Integer userId,Integer activityId);
+    Integer getActivityMemberStatus(Integer userId,Integer activityId);
 }
