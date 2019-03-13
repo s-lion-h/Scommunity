@@ -16,4 +16,5 @@ public interface UserService {
     User updateUserSelective(User user);
     List<User> listUser(Integer page);
     Integer deleteUserById(Integer id);
+    Integer emailIsUsed(String email);
 }

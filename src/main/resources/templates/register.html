@@ -90,23 +90,23 @@
 	<script src="libs/particles/js/app.js"></script>
 	 <!--<script src="libs/particles/js/lib/stats.js"></script>-->
 	<script>
-		var count_particles, stats, update;
-		stats = new Stats;
-		stats.setMode(0);
-		stats.domElement.style.position = 'absolute';
-		stats.domElement.style.left = '0px';
-		stats.domElement.style.top = '0px';
-		document.body.appendChild(stats.domElement);
-		count_particles = document.querySelector('.js-count-particles');
-		update = function() {
-			stats.begin();
-			stats.end();
-			if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) {
-				count_particles.innerText = window.pJSDom[0].pJS.particles.array.length;
-			}
-			requestAnimationFrame(update);
-		};
-		requestAnimationFrame(update);
+		// var count_particles, stats, update;
+		// stats = new Stats;
+		// stats.setMode(0);
+		// stats.domElement.style.position = 'absolute';
+		// stats.domElement.style.left = '0px';
+		// stats.domElement.style.top = '0px';
+		// document.body.appendChild(stats.domElement);
+		// count_particles = document.querySelector('.js-count-particles');
+		// update = function() {
+		// 	stats.begin();
+		// 	stats.end();
+		// 	if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) {
+		// 		count_particles.innerText = window.pJSDom[0].pJS.particles.array.length;
+		// 	}
+		// 	requestAnimationFrame(update);
+		// };
+		// requestAnimationFrame(update);
 	</script>	
 	<script>
 		$(".download_btn").click(function(){
@@ -163,6 +163,7 @@
 			//验证密码
             if($(this).is("#psd")){
                 var psdVal = $.trim(this.value);
+                // console.log($.trim(this.value));
                 var regPsd = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
                 if(psdVal== "" || !regPsd.test(psdVal)){
                     var errorMsg = " 密码为6-20位字母、数字的组合！";
@@ -172,6 +173,31 @@
                     var okMsg=" 输入正确";
                     $parent.append("<span class='msg onSuccess'>" + okMsg + "</span>");
                 }
+            }
+            //验证邮箱
+            if($(this).is("#email")){
+                var emailVal = $.trim(this.value);
+                console.log(emailVal)
+				// var errorMsg = " 请输入邮箱！";
+				// $parent.append("<span class='msg onError'>" + errorMsg + "</span>");
+				var status;
+				$.ajax({
+					url:'emailIsUsed?email='+emailVal,
+                    async:false,
+                    type:'GET',
+					success:function (result) {
+						status=result;
+					}
+				})
+				if (status==1){
+					var okMsg=" 输入正确";
+					$parent.append("<span class='msg onSuccess'>" + okMsg + "</span>");
+				} else if (status == 0){
+					var errorMsg = " 该邮箱已被占用！";
+					$parent.append("<span class='msg onError'>" + errorMsg + "</span>");
+				}
+				// var okMsg=" 输入正确";
+				// $parent.append("<span class='msg onSuccess'>" + okMsg + "</span>");
             }
 		}).keyup(function(){
 			//triggerHandler 防止事件执行完后，浏览器自动为标签获得焦点

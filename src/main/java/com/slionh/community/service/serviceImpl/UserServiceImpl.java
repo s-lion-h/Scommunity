@@ -79,4 +79,14 @@ public class UserServiceImpl implements UserService {
     public Integer deleteUserById(Integer id) {
         return userMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public Integer emailIsUsed(String email) {
+        UserExample userExample=new UserExample();
+        userExample.createCriteria().andEmailEqualTo(email);
+        if(userMapper.selectByExample(userExample).size()>0){
+            return 0;
+        }
+        return 1;
+    }
 }
