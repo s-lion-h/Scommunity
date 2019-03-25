@@ -31,7 +31,6 @@ public class NewsController implements Configuration {
     @PostMapping("addNews")
     public String addNews(HttpServletRequest request,News news, @RequestParam("headImage") MultipartFile headImage) throws IOException {
         User user= (User) request.getSession().getAttribute("loginUser");
-//        if (1==2){
         if (user==null){
 //            未登录跳转首页
             System.out.println("CommunityController : not sign in , return index");

@@ -32,12 +32,31 @@ public class NavController {
     @RequestMapping("/")
     public ModelAndView toIndex(HttpServletRequest request,ModelAndView modelAndView)
     {
+        User user= (User) request.getSession().getAttribute("loginUser");
+        if (user==null){
+            modelAndView.setViewName("login");
+            return modelAndView;
+        }
+
+        if (user.getLevel()==10){
+            modelAndView.setViewName("redirect:/admin");
+            return modelAndView;
+        }else if (user.getLevel()==2){
+            modelAndView.setViewName("redirect:/president");
+            return modelAndView;
+        }
+
         modelAndView.setViewName("index");
         modelAndView.addObject("activities",activityService.listActivity(4));
         modelAndView.addObject("communities", communityService.listCommunity(4));
         modelAndView.addObject("newses",newsService.listNews());
 
         return modelAndView;
+    }
+
+    @RequestMapping("/loginPage")
+    public String toLoginPage(){
+        return "login";
     }
 
     @RequestMapping("/register")

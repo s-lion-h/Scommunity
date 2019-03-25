@@ -2,7 +2,7 @@
     <style>
         body {
             padding-top: 70px;
-            background-image:url('/img/laogong.jpg');
+            background-image:url('/img/laogong2.jpg');
             background-repeat:no-repeat;
             background-size:cover;
             background-attachment:fixed;
@@ -25,26 +25,37 @@
         }
     </style>
 <ul class="myNav justify-content-center navbar fixed-top navbar-light bg-light" style="padding-top: 4px;padding-bottom: 4px;">
-    <li class="nav-item">
-        <a id="index" class="nav-link" href="/">主页</a>
-    </li>
-    <li class="nav-item">
-        <a id="news" class="nav-link" href="/news">站内新闻</a>
-    </li>
-    <li class="nav-item">
-        <a id="navActivity" class="nav-link" href="/navActivity">活动列表</a>
-    </li>
-    <li class="nav-item">
-        <a id="navCommunity" class="nav-link" href="/navCommunity" tabindex="-1" aria-disabled="true">社团浏览</a>
-    </li>
-    <li class="nav-item">
-        <a id="board" class="nav-link" href="/board" style="margin-right: 80px;">留言板</a>
-    </li>
+    <th:block th:if="${session.loginUser.level}==2">
+
+    </th:block>
+    <th:block th:if="${session.loginUser.level}==1">
+        <li class="nav-item">
+            <a id="index" class="nav-link" href="/">主页</a>
+        </li>
+        <li class="nav-item">
+            <a id="news" class="nav-link" href="/news">站内新闻</a>
+        </li>
+        <li class="nav-item">
+            <a id="navActivity" class="nav-link" href="/navActivity">活动列表</a>
+        </li>
+        <li class="nav-item">
+            <a id="navCommunity" class="nav-link" href="/navCommunity" tabindex="-1" aria-disabled="true">社团浏览</a>
+        </li>
+        <li class="nav-item">
+            <a id="board" class="nav-link" href="/board" style="margin-right: 80px;">留言板</a>
+        </li>
+    </th:block>
+    <th:block th:if="${session.loginUser.level}==10">
+        <li class="nav-item">
+            <a class="nav-link" href="/board" style="margin-right: 80px;">留言板</a>
+        </li>
+    </th:block>
+
     <li class="nav-item">
         <th:block th:if="${session.loginUser} == null">
             <a class='nav-link btn btn-light active' data-toggle='modal' data-target='#myModal'>
                 <!--<img src='img/head.jpg' class='img-rounded userimg'>-->
-                登陆/注册
+                登录/注册
             </a>
         </th:block>
         <th:block th:if="${session.loginUser} != null">
@@ -63,12 +74,12 @@
     </li>
 </ul>
 
-<!-- 登陆模态框 -->
+<!-- 登录模态框 -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">登陆</h5>
+                <h5 class="modal-title" id="exampleModalLabel">登录</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -103,7 +114,7 @@
                         <div class="col-9">
                         </div>
                         <div class="checkbox col-3">
-                            <button type="submit" class="btn btn-primary">登陆</button>
+                            <button type="submit" class="btn btn-primary">登录</button>
                         </div>
                     </div>
                 </form>
@@ -117,7 +128,7 @@
         </div>
     </div>
 </div>
-<!-- 已登陆模态框 -->
+<!-- 已登录模态框 -->
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

@@ -24,10 +24,11 @@ public class UserController implements Configuration {
     private UserService userService;
 
     @RequestMapping("/userRegister")
-    public String userRegister(javax.servlet.http.HttpServletRequest request, ModelAndView modelAndView, User user){
+    public String userRegister(HttpServletRequest request, ModelAndView modelAndView, User user){
 //        暂未考虑注册失败、注册重名的问题
 //        level 1 = normal user
         user.setLevel(1);
+        user.setOther(1+"");
 
         User loginUser = userService.register(user);
         request.getSession().setAttribute("loginUser",loginUser);
@@ -42,9 +43,13 @@ public class UserController implements Configuration {
     public ModelAndView userLogin(String email, String password, String remember, ModelAndView modelAndView, HttpServletResponse response, HttpServletRequest request){
 //        System.out.println(email+password);
         User loginUser=userService.login(email, password);
-        if (loginUser==null){
-            modelAndView.setViewName("redirect:/");
-            modelAndView.addObject("msg","error passport");
+        if (loginUser==null) {
+            modelAndView.setViewName("login");
+            modelAndView.addObject("msg", "账号或密码错误");
+            return modelAndView;
+        }else if (!loginUser.getOther().equals("1")){
+            modelAndView.setViewName("login");
+            modelAndView.addObject("msg", "账号已被封禁请联系管理员");
             return modelAndView;
         }else{
 //            登陆成功

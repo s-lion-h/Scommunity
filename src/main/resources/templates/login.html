@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>注册</title>
+    <link rel="stylesheet" href="libs/particles/css/style.css">
+    <link rel="stylesheet" href="libs/sweetalert2/sweetalert2.min.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/login.css">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet">
+    <style>
+        .one{
+            width: 14px;
+            /*padding: 16px 12px;*/
+            margin-top: 5px;
+            border:1px solid #d5d5d5;
+            border-radius: 3px;
+            background-color: #fff;
+        }
+        ul > li{
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+<!-- particles.js container -->
+<div id="particles-js"></div>
+<div id="wrapper">
+    <div>
+        <!--<img src="/img/zhihu_logo.png" />-->
+        <!--<img src="/img/diary_logol.png" />-->
+        <h1 class="text-center">社团管理系统</h1>
+        <hr>
+    </div>
+    <nav class="switch_nav text-center">
+        <!--<a href="javascript:;" id="switch_signup" class="switch_btn on ">注册</a>-->
+        <a href="loginPage" id="switch_login" class="switch_btn">登录|</a>
+        <a href="register" id="" class="switch_btn">|注册</a>
+        <div class="switch_bottom" id="switch_bottom"></div>
+    </nav>
+    <th:block th:if="${msg}!=null">
+        <div class="alert alert-danger" role="alert">
+            <strong th:text="${msg}"></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </th:block>
+    <form type="get" action="/userLogin">
+        <ul class="group_input">
+            <li>
+                <input type="text" placeholder="邮箱" class="mobile required" id="email" name="email"/>
+            </li>
+            <li>
+                <input type="password" placeholder="密码(不少于6位)" class="psd required" id="psd" name="password"/>
+            </li>
+            <li>
+                <input type="checkbox" style="width: 20px;" name="remember" value="1"> 记住我
+            </li>
+        </ul>
+        <button type="submit" class="submit_btn" id="btnSubmit" onclick="sendSubmit()">登录</button>
+    </form>
+
+
+    <div id="footer">
+        <span>&copy;2018日记日历</span><span>·</span><a href="javascript:;">我的日记</a><span>·</span><a href="javascript:;">发现</a><span>·</span><a href="javascript:;">移动应用</a><span>·</span><a href="javascript:;">使用机构账号登录</a><span>·</span><a href="javascript:;">联系我们</a><span>·</span><a href="javascript:;">加入我们</a><br />
+        <span>·</span><a href="javascript:;">京ICP证111111号</a><span>·</span><span>京公网安备11111111111111号</span><span>·</span><a href="javascript:;">出版物经营许可证</a>
+    </div>
+</div>
+<script src="libs/jquery-1.12.4/jquery.min.js"></script>
+<script src="libs/sweetalert2/sweetalert2.min.js"></script>
+<script src="libs/particles/particles.min.js"></script>
+<script src="libs/particles/js/app.js"></script>
+<!--<script src="libs/particles/js/lib/stats.js"></script>-->
+<script>
+</script>
+<script>
+    $(".download_btn").click(function(){
+        if($(".QRcode").css("display")=="none"){
+            $(".QRcode").show();
+            $(".download_btn").text("关闭二维码");
+        }else{
+            $(".QRcode").hide();
+            $(".download_btn").text("下载知乎App");
+        }
+    });
+</script>
+<script>
+    $(function(){
+        //为表单元素添加失去焦点事件
+        $("form :input").blur(function(){
+            var $parent = $(this).parent();
+            $parent.find(".msg").remove(); //删除以前的提醒元素（find()：查找匹配元素集中元素的所有匹配元素）
+            //triggerHandler 防止事件执行完后，浏览器自动为标签获得焦点
+            $(this).triggerHandler("blur");
+        }).focus(function(){
+            $(this).triggerHandler("blur");
+        });
+
+        //点击重置按钮时，通过trigger()来触发文本框的失去焦点事件
+        $("#btnSubmit").click(function(){
+            //trigger 事件执行完后，浏览器会为submit按钮获得焦点
+            $("form .required:input").trigger("blur");
+            var numError = $("form .onError").length;
+            if(numError){
+                return false;
+            }
+            // alert('注册成功！')
+
+        });
+    })
+
+</script>
+</body>
+</html>
