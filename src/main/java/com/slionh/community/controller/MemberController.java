@@ -23,7 +23,6 @@ public class MemberController {
         memberService.addUserApply(user.getIduser(),communityId,description);
         return "redirect:/communityDetail?id="+communityId;
 
-
     }
     @RequestMapping("accessApply")
     public String accessApply(Integer uid,HttpServletRequest request){

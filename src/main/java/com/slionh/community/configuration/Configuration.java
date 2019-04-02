@@ -13,7 +13,7 @@ public interface Configuration {
     String HEAD_IMAGE_PATH="C:/Users/s lion h/Documents/diary/head/";
 //    String HEAD_IMAGE_PATH="/root/community/head/";
 
-//    默认获取管理员的每天N条日记
+//    默认获取管理员的每天N条
     int ADMIN_DIARY_NUMBER = 3;
 
 }

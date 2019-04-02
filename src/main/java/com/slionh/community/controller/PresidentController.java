@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 /*
  * Create by s lion h on 2019/3/7
@@ -53,7 +56,21 @@ public class PresidentController {
         }else {
             Community community= (Community) request.getSession().getAttribute("community");
             modelAndView.setViewName("president/activities");
-            modelAndView.addObject("activities",activityService.listCommunityActivity(community.getIdcommunity()));
+            List<Activity> list= activityService.listCommunityActivity(community.getIdcommunity());
+            modelAndView.addObject("activities",list);
+            HashMap hashMap=new HashMap();
+            HashMap amount = new HashMap();
+            for (Activity activity:list){
+                amount.put(activity.getIdactivity(),activityService.getAmountByActivity(activity.getIdactivity()));
+                if (activity.getEndtime().getTime()>new Date().getTime()){
+                    hashMap.put(activity.getIdactivity(),true);
+                }else {
+                    hashMap.put(activity.getIdactivity(),false);
+                }
+            }
+            modelAndView.addObject("endStatus",hashMap);
+            modelAndView.addObject("amount",amount);
+
 
             return modelAndView;
         }

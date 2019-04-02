@@ -17,17 +17,30 @@
                     <td>id</td>
                     <td>标题</td>
                     <td>开始时间</td>
+                    <td>结束时间</td>
                     <td>位置</td>
+                    <td>已参加人数</td>
+                    <td>操作</td>
                 </tr>
                 </thead>
                 </tbody>
-                <th:block th:each="activity:${activities}" >
+                <th:block th:each="activity:${activities}">
                     <tr>
                         <td th:text="${activity.idactivity}"></td>
                         <td><a target="_blank" th:href="'activityDetail?activityId='+${activity.idactivity}" th:text="${activity.title}"></a</td>
-                        <td th:text="${activity.starttime}"></td>
+                        <!--<td th:text="${activity.starttime}"></td>-->
+                        <td th:text="${#dates.format(activity.starttime, 'yyyy年MM月dd HH:mm')}"></td>
+                        <td th:text="${#dates.format(activity.endtime, 'yyyy年MM月dd HH:mm')}"></td>
                         <td th:text="${activity.location}"></td>
-                        <td><button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" th:onclick="'selectActivityId='+${activity.idactivity}+';getActivity()'">操作</button></td>
+                        <td th:text="${amount.get(activity.idactivity)}"></td>
+                        <th:block th:if="${endStatus.get(activity.idactivity)}">
+                            <td><button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" th:onclick="'selectActivityId='+${activity.idactivity}+';getActivity()'">操作</button></td>
+                        </th:block>
+                        <th:block th:if="!${endStatus.get(activity.idactivity)}">
+                            <td><button class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal2" th:onclick="'selectActivityId='+${activity.idactivity}+';getActivity()'">活动过期</button></td>
+                            <!--<td><button class="btn btn-secondary" disabled>活动过期</button></td>-->
+                        </th:block>
+                        <!--<td><button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" th:onclick="'selectActivityId='+${activity.idactivity}+';getActivity()'">操作</button></td>-->
                     </tr>
                 </th:block>
                 </tbody>
@@ -91,6 +104,55 @@
         </div>
     </div>
 </div>
+<!--结束model-->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">修改活动信息</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="" role="form" method="post"  autocomplete="off">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">标题</span>
+                        </div>
+                        <textarea id="title2" rows="2" name="title" class="form-control" disabled></textarea>
+                    </div>
+                    <hr>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">内容</span>
+                        </div>
+                        <textarea id="description2" rows="5" name="description" class="form-control" disabled></textarea>
+                    </div>
+                    <hr>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">位置</span>
+                        </div>
+                        <textarea id="location2" rows="3" name="location" class="form-control" disabled></textarea>
+                    </div>
+                    <hr>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">经纬度</span>
+                        </div>
+                        <input type="text" id="position2" rows="5" name="description" class="form-control" disabled></input>
+                    </div>
+                    <hr>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭这里</button>
+                <button class="btn btn-danger" disabled>活动已结束</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     var selectActivityId=0;
     function deleteActivity(){
@@ -105,10 +167,15 @@
             success:function (data) {
                 console.log(data)
                 $("#title").val(data.title)
+                $("#title2").val(data.title)
                 $("#description").val(data.description)
+                $("#description2").val(data.description)
                 $("#idactivity").val(data.idactivity)
+                $("#idactivity2").val(data.idactivity)
                 $("#position").val(data.position)
+                $("#position2").val(data.position)
                 $("#location").val(data.location)
+                $("#location2").val(data.location)
             }
         })
     }

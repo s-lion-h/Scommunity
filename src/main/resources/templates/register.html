@@ -33,8 +33,7 @@
 			<!--<img src="/img/diary_logol.png" />-->
 			<h1 class="text-center">社团管理系统</h1>
             <hr>
-			<p class="text-center">我就是我，不是别的任何人</p>
-			<p class="text-center">这里是我活着的证明</p>
+			<p class="text-center">广东药科大学</p>
 		</div>
 		<nav class="switch_nav text-center">
 			<!--<a href="javascript:;" id="switch_signup" class="switch_btn on ">注册</a>-->
@@ -55,10 +54,10 @@
 					<input type="password" placeholder="密码(不少于6位)" class="psd required" id="psd" name="password"/>
 				</li>
 				<li>
-					<input type="text" placeholder="手机" class="mobile required" id="mobile" name="phone"/>
+					<input type="text" placeholder="手机（选填）" class="mobile required" id="mobile" name="phone"/>
 				</li>
 				<li>
-					<input type="text" placeholder="学号" class="mobile required" id="schoolnumber" name="schoolnumber"/>
+					<input type="text" placeholder="学号（选填）" class="mobile required" id="schoolnumber" name="schoolnumber"/>
 				</li>
 				<li>
 					<!--<input type="text" placeholder="性别" class="mobile required" id="sex" name="sex"/>-->
@@ -82,8 +81,8 @@
   
 	
 		<div id="footer">
-			<span>&copy;2018日记日历</span><span>·</span><a href="javascript:;">我的日记</a><span>·</span><a href="javascript:;">发现</a><span>·</span><a href="javascript:;">移动应用</a><span>·</span><a href="javascript:;">使用机构账号登录</a><span>·</span><a href="javascript:;">联系我们</a><span>·</span><a href="javascript:;">加入我们</a><br />
-			<span>·</span><a href="javascript:;">京ICP证111111号</a><span>·</span><span>京公网安备11111111111111号</span><span>·</span><a href="javascript:;">出版物经营许可证</a>
+			<span>&copy;2019社团管理系统</span><span>·</span><a href="javascript:;">社团管理系统</a><span>·</span><a href="javascript:;">发现</a><span>·</span><a href="javascript:;">移动应用</a><span>·</span><a href="javascript:;">使用机构账号登录</a><span>·</span><a href="javascript:;">联系我们</a><span>·</span><a href="javascript:;">加入我们</a><br />
+			<span>·</span><a href="javascript:;">京ICP证111111号</a><span>·</span><span>粤公网安备11111111111111号</span><span>·</span><a href="javascript:;">出版物经营许可证</a>
 		</div>
 	</div>
 	<script src="libs/jquery-1.12.4/jquery.min.js"></script>
@@ -196,6 +195,12 @@
 					$parent.append("<span class='msg onSuccess'>" + okMsg + "</span>");
 				} else if (status == 0){
 					var errorMsg = " 该邮箱已被占用！";
+					$parent.append("<span class='msg onError'>" + errorMsg + "</span>");
+				} else if (status == 2){
+					var errorMsg = " 邮箱格式错误！";
+					$parent.append("<span class='msg onError'>" + errorMsg + "</span>");
+				} else if (status == 3){
+					var errorMsg = " 请输入邮箱！";
 					$parent.append("<span class='msg onError'>" + errorMsg + "</span>");
 				}
 				// var okMsg=" 输入正确";
