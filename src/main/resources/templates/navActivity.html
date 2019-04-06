@@ -4,8 +4,11 @@
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
     <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
     <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet">
-    <style>
+    <!--<link href="/css/theme.default.css" rel="stylesheet">-->
+    <script type="text/javascript" src="/js/jquery.tablesorter.js"></script>
+    <script type="text/javascript" src="/js/jquery.tablesorter.widgets.js"></script>
 
+    <style>
     </style>
 </head>
 <body>
@@ -26,10 +29,29 @@
         <div class="col-9">
             <h2>所有活动</h2>
             <hr>
-            <table class="table table-bordered table-hover ">
+
+            <form action="navActivity">
+                <label>社团：</label>
+                <select name="communityId">
+                    <option value="0">所有</option>
+                    <option th:each="community:${communities}" th:value="${community.idcommunity}" th:text="${community.name}"></option>
+                </select>
+                <label>活动类型：</label>
+                <select name="type">
+                    <option value="0" selected>所有</option>
+                    <option value="2">非强制性活动</option>
+                    <option value="1">强制性活动</option>
+                </select>
+                <input class="btn btn-primary" type="submit" value="查询活动">
+            </form>
+
+            <code>灰色为已过期活动</code>
+
+            <table id="myTable" class=" tablesorter tablesorter-default table table-bordered table-hover">
                 <thead>
                 <tr>
                     <td>社团</td>
+                    <td>类型</td>
                     <td>标题</td>
                     <td>开始时间</td>
                     <td>位置</td>
@@ -37,10 +59,26 @@
                 </thead>
                 </tbody>
                 <th:block th:each="activity:${activities}">
-                    <tr>
+                    <tr th:if="${hashMap.get(activity.idactivity)}==true">
                         <td th:text="${activity.position}"></td>
+                        <td th:if="${activity.mandatory}==2">非强制</td>
+                        <td th:if="${activity.mandatory}==1" class="text-danger">强制</td>
+
                         <td><a th:href="'activityDetail?activityId='+${activity.idactivity}" th:text="${activity.title}"></a></td>
-                        <td th:text="${activity.starttime}"></td>
+                        <!--<td th:text="${activity.starttime}"></td>-->
+                        <td th:text="${#dates.format(activity.starttime, 'yyyy年MM月dd HH:mm')}"></td>
+
+                        <td th:text="${activity.location}"></td>
+                    </tr>
+                    <tr th:if="${hashMap.get(activity.idactivity)}==false" class="table-secondary">
+                        <td th:text="${activity.position}"></td>
+                        <td th:if="${activity.mandatory}==2">非强制</td>
+                        <td th:if="${activity.mandatory}==1" class="text-danger">强制</td>
+
+                        <td><a th:href="'activityDetail?activityId='+${activity.idactivity}" th:text="${activity.title}"></a></td>
+                        <!--<td th:text="${activity.starttime}"></td>-->
+                        <td th:text="${#dates.format(activity.starttime, 'yyyy年MM月dd HH:mm')}"></td>
+
                         <td th:text="${activity.location}"></td>
                     </tr>
                 </th:block>
@@ -49,9 +87,16 @@
         </div>
     </div>
 </div>
-<script>
+<script type="text/javascript">
+    /*<![CDATA[*/
     $("#navActivity").addClass("btn btn-secondary active")
-
+    $(document).ready(function()
+        {
+            $("#myTable").tablesorter();
+            // $("#myTable").tablesorter( {sortList: /*<![CDATA[*/[/*]]>*/[3,1]/*<![CDATA[*/]/*]]>*/} );
+        }
+    );
+    /*]]>*/
 </script>
 </body>
 </html>

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /*
  * Create by s lion h on 2019/3/7
@@ -51,14 +52,20 @@ public class ActivityController {
     public ModelAndView activityDetail(ModelAndView modelAndView,HttpServletRequest request,Integer activityId){
         User user= (User) request.getSession().getAttribute("loginUser");
         if (user==null){
-
+            modelAndView.setViewName("redirect:/");
+            System.out.println("没有登陆，返回主页");
+            return modelAndView;
         }else{
             modelAndView.addObject("status", activityService.getActivityMemberStatus(user.getIduser(), activityId));
             modelAndView.addObject("myScore", activityService.getActivityScoreByUser(user.getIduser(), activityId));
 
         }
         modelAndView.setViewName("activityDetail");
-
+        if (activityService.getActivity(activityId).getEndtime().getTime()>new Date().getTime()){
+            modelAndView.addObject("isTimeout",true);
+        }else {
+            modelAndView.addObject("isTimeout",false);
+        }
         modelAndView.addObject("community",activityService.getCommunityByActivityId(activityId));
         modelAndView.addObject("amount",activityService.getAmountByActivity(activityId));
         modelAndView.addObject("activity",activityService.getActivity(activityId));

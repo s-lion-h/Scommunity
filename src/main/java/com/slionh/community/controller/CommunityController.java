@@ -109,6 +109,9 @@ public class CommunityController implements Configuration {
         User user= (User) request.getSession().getAttribute("loginUser");
         if (user!=null){
             modelAndView.addObject("status",memberService.getUserCommunityStatus(user.getIduser(),id));
+        }else{
+            modelAndView.setViewName("redirect:/");
+            return modelAndView;
         }
 
         Community community=communityService.getCommunity(id);

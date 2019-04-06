@@ -684,6 +684,66 @@ public class ActivityExample {
             addCriterion("createTime not between", value1, value2, "createtime");
             return (Criteria) this;
         }
+
+        public Criteria andMandatoryIsNull() {
+            addCriterion("mandatory is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMandatoryIsNotNull() {
+            addCriterion("mandatory is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMandatoryEqualTo(Integer value) {
+            addCriterion("mandatory =", value, "mandatory");
+            return (Criteria) this;
+        }
+
+        public Criteria andMandatoryNotEqualTo(Integer value) {
+            addCriterion("mandatory <>", value, "mandatory");
+            return (Criteria) this;
+        }
+
+        public Criteria andMandatoryGreaterThan(Integer value) {
+            addCriterion("mandatory >", value, "mandatory");
+            return (Criteria) this;
+        }
+
+        public Criteria andMandatoryGreaterThanOrEqualTo(Integer value) {
+            addCriterion("mandatory >=", value, "mandatory");
+            return (Criteria) this;
+        }
+
+        public Criteria andMandatoryLessThan(Integer value) {
+            addCriterion("mandatory <", value, "mandatory");
+            return (Criteria) this;
+        }
+
+        public Criteria andMandatoryLessThanOrEqualTo(Integer value) {
+            addCriterion("mandatory <=", value, "mandatory");
+            return (Criteria) this;
+        }
+
+        public Criteria andMandatoryIn(List<Integer> values) {
+            addCriterion("mandatory in", values, "mandatory");
+            return (Criteria) this;
+        }
+
+        public Criteria andMandatoryNotIn(List<Integer> values) {
+            addCriterion("mandatory not in", values, "mandatory");
+            return (Criteria) this;
+        }
+
+        public Criteria andMandatoryBetween(Integer value1, Integer value2) {
+            addCriterion("mandatory between", value1, value2, "mandatory");
+            return (Criteria) this;
+        }
+
+        public Criteria andMandatoryNotBetween(Integer value1, Integer value2) {
+            addCriterion("mandatory not between", value1, value2, "mandatory");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

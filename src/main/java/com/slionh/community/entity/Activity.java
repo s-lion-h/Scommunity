@@ -21,6 +21,8 @@ public class Activity {
 
     private Date createtime;
 
+    private Integer mandatory;
+
     public Integer getIdactivity() {
         return idactivity;
     }
@@ -93,6 +95,14 @@ public class Activity {
         this.createtime = createtime;
     }
 
+    public Integer getMandatory() {
+        return mandatory;
+    }
+
+    public void setMandatory(Integer mandatory) {
+        this.mandatory = mandatory;
+    }
+
     @Override
     public String toString() {
         return "Activity{" +
@@ -105,6 +115,7 @@ public class Activity {
                 ", position='" + position + '\'' +
                 ", location='" + location + '\'' +
                 ", createtime=" + createtime +
+                ", mandatory=" + mandatory +
                 '}';
     }
 }

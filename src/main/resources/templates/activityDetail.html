@@ -90,12 +90,19 @@
     <div class="row">
         <div class="col-8">
             <h2>活动内容</h2>
+            <h2 th:if="${activity.mandatory}==1" class="text-danger">（强制参加的活动）</h2>
             <hr>
             <h4>活动标题:</h4>
             <p th:text="${activity.title}"></p>
             <hr>
             <h4>活动详情:</h4>
             <p th:text="${activity.description}"></p>
+            <hr>
+            <h4>开始时间:</h4>
+            <p th:text="${#dates.format(activity.starttime, 'yyyy年MM月dd HH:mm')}"></p>
+            <hr>
+            <h4>结束时间:</h4>
+            <p th:text="${#dates.format(activity.endtime, 'yyyy年MM月dd HH:mm')}"></p>
             <hr>
 
             <div class="container">
@@ -171,30 +178,37 @@
                 </button>
             </th:block>
             <th:block th:if="${session.loginUser} != null">
-                <th:block th:if="${status} == 1">
-                    <a th:href="'/exitActivity?activityId='+${activity.idactivity}"><button style="width: 100%;" class="btn btn-danger">已加入(点击退出)</button></a>
+                <th:block th:if="${isTimeout}==true">
+                    <th:block th:if="${status} == 1">
+                        <a th:href="'/exitActivity?activityId='+${activity.idactivity}"><button style="width: 100%;" class="btn btn-danger">已加入(点击退出)</button></a>
+                    </th:block>
+                    <th:block th:if="${status} == 0">
+                        <a th:href="'/joinActivity?activityId='+${activity.idactivity}"><button style="width: 100%;" class="btn btn-primary">加入此活动</button></a>
+                    </th:block>
                 </th:block>
-                <th:block th:if="${status} == 0">
-                    <a th:href="'/joinActivity?activityId='+${activity.idactivity}"><button style="width: 100%;" class="btn btn-primary">加入此活动</button></a>
+                <th:block th:if="${isTimeout}==false">
+                    <a><button style="width: 100%;" class="btn btn-secondary" disabled>此活动已过期</button></a>
                 </th:block>
                 <hr>
                 <br>
                 <hr>
-                <h3 class="text-info" th:if="${myScore} != null" th:text="'我的评分 : '+${myScore}"></h3>
-                <h3 class="text-info" th:if="${myScore} == null">我暂未评分哦</h3>
-                <form action="setActivityScore" method="post">
-                    <input type="range" th:value="${myScore}" class="custom-range" name="score"  min="1" max="5" id="customRange2">
-                    <div class="row text-center" >
-                        <div class="col">1</div>
-                        <div class="col">2</div>
-                        <div class="col">3</div>
-                        <div class="col">4</div>
-                        <div class="col">5</div>
-                    </div>
-                    <hr>
-                    <input type="hidden" name="activityid" th:value="${activity.idactivity}">
-                    <input type="submit" value="评分" class="btn btn-info form-control">
-                </form>
+                <th:block th:if="${status} == 1">
+                    <h3 class="text-info" th:if="${myScore} != null" th:text="'我的评分 : '+${myScore}"></h3>
+                    <h3 class="text-info" th:if="${myScore} == null">我暂未评分哦</h3>
+                    <form action="setActivityScore" method="post">
+                        <input type="range" th:value="${myScore}" class="custom-range" name="score"  min="1" max="5" id="customRange2">
+                        <div class="row text-center" >
+                            <div class="col">1</div>
+                            <div class="col">2</div>
+                            <div class="col">3</div>
+                            <div class="col">4</div>
+                            <div class="col">5</div>
+                        </div>
+                        <hr>
+                        <input type="hidden" name="activityid" th:value="${activity.idactivity}">
+                        <input type="submit" value="评分" class="btn btn-info form-control">
+                    </form>
+                </th:block>
                 <!--<input id="input-id" type="number" class="rating" min=0 max=5 step=0.5 data-size="lg" >-->
 
             </th:block>

@@ -42,13 +42,23 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public List<Activity> listActivity() {
-        List<Activity> list = activityMapper.selectByExample(new ActivityExample());
+        ActivityExample activityExample=new ActivityExample();
+        activityExample.setOrderByClause("starttime desc");
+        List<Activity> list = activityMapper.selectByExample(activityExample);
         List<Activity> activities=new ArrayList<Activity>();
         for(Activity activity:list){
             activity.setPosition(communityMapper.selectByPrimaryKey(activity.getCommunityid()).getName());
             activities.add(activity);
         }
         return activities;
+    }
+
+    @Override
+    public List<Activity> listActivityAndPosition() {
+        ActivityExample activityExample=new ActivityExample();
+        activityExample.setOrderByClause("starttime desc");
+        List<Activity> list = activityMapper.selectByExample(activityExample);
+        return list;
     }
 
     @Override
@@ -202,4 +212,62 @@ public class ActivityServiceImpl implements ActivityService {
             return activitymemberMapper.updateByPrimaryKey(activitymember);
         }
     }
+
+    @Override
+    public List<Activity> listUsersActivity(Integer userId) {
+        ActivitymemberExample activitymemberExample=new ActivitymemberExample();
+        activitymemberExample.createCriteria().andUseridEqualTo(userId);
+        List<Activitymember> list =  activitymemberMapper.selectByExample(activitymemberExample);
+        List<Activity> join = new ArrayList<Activity>();
+        List<Activity> joined = new ArrayList<Activity>();
+        for (Activitymember activitymember:list){
+            join.add(activityMapper.selectByPrimaryKey(activitymember.getActivityid()));
+        }
+        for(Activity activity:join){
+            activity.setPosition(communityMapper.selectByPrimaryKey(activity.getCommunityid()).getName());
+            joined.add(activity);
+        }
+        return joined;
+    }
+
+    @Override
+    public Integer getActivityAmountByUserId(Integer userId) {
+        ActivitymemberExample activitymemberExample=new ActivitymemberExample();
+        activitymemberExample.createCriteria().andUseridEqualTo(userId);
+
+        return activitymemberMapper.countByExample(activitymemberExample);
+    }
+
+    @Override
+    public Integer getReferenceJoinAmountByUserId(Integer userId, Integer communityId) {
+        ActivitymemberExample activitymemberExample=new ActivitymemberExample();
+
+        activitymemberExample.createCriteria().andUseridEqualTo(userId);
+        List<Activitymember> activitymembers=activitymemberMapper.selectByExample(activitymemberExample);
+
+        ActivityExample activityExample=new ActivityExample();
+        activityExample.createCriteria().andCommunityidEqualTo(communityId).andMandatoryEqualTo(1);
+        List<Activity> activities=activityMapper.selectByExample(activityExample);
+
+        int amount=0;
+        for (Activity activity:activities){
+            for (Activitymember activitymember:activitymembers){
+                if (activity.getIdactivity()==activitymember.getActivityid()){
+                    amount++;
+                    break;
+                }
+            }
+        }
+
+        return amount;
+    }
+
+    @Override
+    public Integer getCommunityReferenceAmount(Integer communityId) {
+        ActivityExample activityExample=new ActivityExample();
+        activityExample.createCriteria().andCommunityidEqualTo(communityId).andMandatoryEqualTo(1);
+        return activityMapper.countByExample(activityExample);
+    }
+
+
 }

@@ -9,6 +9,14 @@
         .label-bottom{
             margin-bottom: 20px;
         }
+        .publicDetail{
+            /*超过一行就省略号*/
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+        }
     </style>
 </head>
 <body>
@@ -34,7 +42,7 @@
                                 <div class="col-8">
                                     <h3 th:text="${community.name}"></h3>
                                     <hr>
-                                    <p th:text="${community.introduction}"></p>
+                                    <p th:text="${community.introduction}" class="publicDetail"></p>
                                 </div>
                             </div>
                         </a>
@@ -59,7 +67,7 @@
                             <div class="col-8">
                                 <h3 th:text="${community.name}"></h3>
                                 <hr>
-                                <p th:text="${community.introduction}"></p>
+                                <p th:text="${community.introduction}" class="publicDetail"></p>
                             </div>
                         </div>
                         </a>

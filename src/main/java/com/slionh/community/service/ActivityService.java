@@ -11,6 +11,7 @@ public interface ActivityService {
     Integer addActivity(Activity activity);
     List<Activity> listCommunityActivity(Integer communityId);
     List<Activity> listActivity();
+    List<Activity> listActivityAndPosition();
     List<Activity> listActivity(Integer num);
     Activity getActivity(Integer id);
     Community getCommunityByActivityId(Integer id);
@@ -26,4 +27,10 @@ public interface ActivityService {
     Integer getActivityScoreByUser(Integer userId,Integer activityId);
     Integer getActivityScoreAvg(Integer activityId);
     Integer setActivityScore(Activitymember activitymember);
+    List<Activity> listUsersActivity(Integer userId);
+
+//    参与所有活动的数量，不局限于自己社团
+    Integer getActivityAmountByUserId(Integer userId);
+    Integer getReferenceJoinAmountByUserId(Integer userId,Integer communityId);
+    Integer getCommunityReferenceAmount(Integer communityId);
 }

@@ -11,6 +11,7 @@
     <result column="position" property="position" jdbcType="VARCHAR" />
     <result column="location" property="location" jdbcType="VARCHAR" />
     <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="mandatory" property="mandatory" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -72,7 +73,7 @@
   </sql>
   <sql id="Base_Column_List" >
     idActivity, communityId, title, description, startTime, endTime, position, location, 
-    createTime
+    createTime, mandatory
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.slionh.community.entity.ActivityExample" >
     select
@@ -110,10 +111,12 @@
     </selectKey>
     insert into activity (communityId, title, description, 
       startTime, endTime, position, 
-      location, createTime)
+      location, createTime, mandatory
+      )
     values (#{communityid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{position,jdbcType=VARCHAR}, 
-      #{location,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP})
+      #{location,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{mandatory,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.slionh.community.entity.Activity" >
     <selectKey resultType="java.lang.Integer" keyProperty="idactivity" order="AFTER" >
@@ -145,6 +148,9 @@
       <if test="createtime != null" >
         createTime,
       </if>
+      <if test="mandatory != null" >
+        mandatory,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="communityid != null" >
@@ -170,6 +176,9 @@
       </if>
       <if test="createtime != null" >
         #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mandatory != null" >
+        #{mandatory,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -209,6 +218,9 @@
       <if test="record.createtime != null" >
         createTime = #{record.createtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.mandatory != null" >
+        mandatory = #{record.mandatory,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -224,7 +236,8 @@
       endTime = #{record.endtime,jdbcType=TIMESTAMP},
       position = #{record.position,jdbcType=VARCHAR},
       location = #{record.location,jdbcType=VARCHAR},
-      createTime = #{record.createtime,jdbcType=TIMESTAMP}
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      mandatory = #{record.mandatory,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -256,6 +269,9 @@
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="mandatory != null" >
+        mandatory = #{mandatory,jdbcType=INTEGER},
+      </if>
     </set>
     where idActivity = #{idactivity,jdbcType=INTEGER}
   </update>
@@ -268,7 +284,8 @@
       endTime = #{endtime,jdbcType=TIMESTAMP},
       position = #{position,jdbcType=VARCHAR},
       location = #{location,jdbcType=VARCHAR},
-      createTime = #{createtime,jdbcType=TIMESTAMP}
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      mandatory = #{mandatory,jdbcType=INTEGER}
     where idActivity = #{idactivity,jdbcType=INTEGER}
   </update>
 </mapper>

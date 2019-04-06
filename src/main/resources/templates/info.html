@@ -129,7 +129,53 @@
                 </div>
             </th:block>
         </div>
+    </div>
+    <hr>
+    <hr>
 
+    <div class="row">
+        <div class="col">
+        <h2>我以加入的活动</h2>
+        <hr>
+        <code class="text-secondary">（绿色为正在进行的活动）</code>
+        <table class="table table-bordered table-hover ">
+            <thead>
+            <tr>
+                <td>社团</td>
+                <td>类型</td>
+                <td>标题</td>
+                <td>开始时间</td>
+                <td>位置</td>
+            </tr>
+            </thead>
+            </tbody>
+            <th:block th:each="activity:${myActivity}">
+                <tr th:if="${hashMap.get(activity.idactivity)}==true" class="table-success">
+                    <td th:text="${activity.position}"></td>
+                    <td th:if="${activity.mandatory}==2">非强制</td>
+                    <td th:if="${activity.mandatory}==1" class="text-danger">强制</td>
+
+                    <td><a th:href="'activityDetail?activityId='+${activity.idactivity}" th:text="${activity.title}"></a></td>
+                    <!--<td th:text="${activity.starttime}"></td>-->
+                    <td th:text="${#dates.format(activity.starttime, 'yyyy年MM月dd HH:mm')}"></td>
+
+                    <td th:text="${activity.location}"></td>
+                </tr>
+                <tr th:if="${hashMap.get(activity.idactivity)}==false">
+                    <td th:text="${activity.position}"></td>
+                    <td th:if="${activity.mandatory}==2">非强制</td>
+                    <td th:if="${activity.mandatory}==1" class="text-danger">强制</td>
+
+                    <td><a th:href="'activityDetail?activityId='+${activity.idactivity}" th:text="${activity.title}"></a></td>
+                    <!--<td th:text="${activity.starttime}"></td>-->
+                    <td th:text="${#dates.format(activity.starttime, 'yyyy年MM月dd HH:mm')}"></td>
+
+                    <td th:text="${activity.location}"></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+        </div>
     </div>
 </div>
 </body>

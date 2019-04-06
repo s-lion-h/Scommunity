@@ -26,8 +26,14 @@
                 <hr>
                 <p>活动地点</p>
                 <input name="location" type="text" class="form-control" placeholder="活动地点">
+                <hr>
+                <a href="/communityMap" target="_blank" class="btn btn-primary">点击去获取活动地点经纬度</a>
                 <p>经纬度</p>
                 <input name="position" type="text" class="form-control" placeholder="填写此行可以出现在活动地图上哦">
+                <p>活动类别（是否强制）</p>
+                <input name="mandatory" type="radio" value="1" class="" >强制
+                <input name="mandatory" type="radio" value="2" class="" checked>非强制
+
                 <hr>
                 <input type="submit" class="btn btn-primary" value="新增活动">
             </form>

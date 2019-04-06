@@ -1,0 +1,251 @@
+<!doctype html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>社团活动地图</title>
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>
+    <style type="text/css">
+        .info-title {
+            color: white;
+            font-size: 14px;
+            background-color:blue;
+            line-height: 26px;
+            padding: 0px 0 0 6px;
+            font-weight: lighter;
+            letter-spacing: 1px
+        }
+        .info-content {
+            font: 12px Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial;
+            padding: 4px;
+            color: #666666;
+            line-height: 23px;
+        }
+        .info-content img {
+            float: left;
+            margin: 3px;
+        }
+        ul li{
+            list-style:none;
+            /*width: 50%;*/
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.js"></script>
+    <!--<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.9&key=2b35126bc659f27d0df08adab38be5bc&plugin=AMap.Autocomplete"></script>-->
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.9&key=2b35126bc659f27d0df08adab38be5bc&plugin=AMap.AdvancedInfoWindow,AMap.Autocomplete"></script>
+    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/4.1.1/css/bootstrap.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/4.1.1/js/bootstrap.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<div id="myPageTop">
+    <table>
+        <tr>
+            <td>
+                <label>按关键字搜索：</label>
+            </td>
+            <td class="column2">
+                <label>左击获取经纬度：</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" placeholder="请输入关键字进行搜索" id="tipinput">
+            </td>
+            <td class="column2">
+                <input type="text" readonly="true" id="lnglat">
+            </td>
+        </tr>
+        <div id="typeslist" style="DISPLAY: none;">
+            <div class="info-title">fun here</div>
+            <div class="info-content">
+                <div class="form-group row">
+                    <label id="activityLabel" for="activityTitle" class="col-sm-3 col-form-label"><h5>标题:</h5></label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="activityTitle" placeholder="想玩点啥呗">
+                    </div>
+                </div>
+
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-outline-primary btn-sm active">
+                        <input type="radio" name="type" autocomplete="off" checked th:text="其他" th:value="0">
+                    </label>
+                    <label class="btn btn-outline-primary btn-sm" th:each="type:${types}">
+                        <input type="radio" name="type" autocomplete="off" th:text="${type.name}" th:value="${type.typeid}">
+                    </label>
+                </div>
+                <hr/>
+                <div class="row justify-content-md-center">
+                    <div class="col-sm-auto">
+                        <input class="btn btn-primary btn-sm" type="submit" value="提交" onclick="pushActivity()">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </table>
+</div>
+<script th:inline="javascript">
+    var map = new AMap.Map("container", {
+        resizeEnable: true,
+        center: [113.396251,23.051426],
+        zoom:15
+    });
+
+    var pointlnglat;
+    // console.log([[${types}]]);
+
+    marker = new AMap.Marker({
+        map: map,
+        // icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png',
+        // zoom:13,
+        // position: [126.405467, 39.907761]
+        // position: [113.401718,23.055374],
+    });
+    //为地图注册click事件获取鼠标点击出的经纬度坐标
+    var clickEventListener = map.on('click', function(e) {
+        document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat();
+        console.log(e);
+        var point=[e.lnglat.getLng(),e.lnglat.getLat()];
+        pointlnglat = point;
+        marker.setPosition(point);
+        infowindow2.open(map,point);
+        document.getElementById("typeslist").style.display="";
+    });
+    var rightEventListener = map.on('contextmenu', function(e) {
+        console.log(e);
+        var point=[e.lnglat.getLng(),e.lnglat.getLat()];
+        addMarker(e.lnglat.getLng(),e.lnglat.getLat());
+        marker.setPosition(point);
+        // infowindow2.open(map,point);
+    });
+
+    // 允许标记点自动选择
+    var auto = new AMap.Autocomplete({
+        input: "tipinput"
+    });
+    AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
+    function select(e) {
+        if (e.poi && e.poi.location) {
+            map.setZoom(13);
+            map.setCenter(e.poi.location);
+        }
+    }
+
+    var text = new AMap.Text({
+        text:'蹦迪',
+        textAlign:'center', // 'left' 'right', 'center',
+        verticalAlign:'middle', //middle 、bottom
+        // draggable:true,
+        // cursor:'pointer',
+        angle:10,
+        style:{
+            'background-color':'pink',
+            'border':'solid 1px #0088ff',
+            'padding':'10px 20px'
+        },
+        position: [116.093666,40.060287]
+    });
+    text.setMap(map);
+
+    for (i=0; i < [[${activities}]].length;i++){
+        var str=[[${activities}]][i].position;
+        var positionXY=str.split(",");
+        var type=[[${activities}]][i].title;
+        console.log(positionXY)
+        console.log([[${activities}]][i]);
+        console.log(type)
+        var text2 = new AMap.Text({
+            // text:[[${activity}]][i].type,
+            text:type,
+            textAlign:'center', // 'left' 'right', 'center',
+            verticalAlign:'middle', //middle 、bottom
+            // draggable:true,
+            // cursor:'pointer',
+            angle:10,
+            style:{
+                'background-color':'pink',
+                'border':'solid 1px #0088ff',
+                'padding':'10px 20px'
+            },
+            position: positionXY
+        });
+        text2.setMap(map);
+    }
+    // console.log([[${activity}]][1].position)
+
+    // 获取生成types层叠
+    var content3=document.getElementById("typeslist")
+
+    var  infowindow2 = new AMap.AdvancedInfoWindow({
+        content: content3,
+        asOrigin: false,
+        asDestination: false,
+        offset: new AMap.Pixel(0, -30)
+    });
+
+    // function checkform() {
+    //     var title=$("#activityTitle").val();
+    //     var type=$("input[name='type']:checked").val();
+    //     if (title==null||title==''){
+    //         return 0;
+    //     }
+    //     if (type==null||type==''){
+    //         return 0;
+    //     }
+    // }
+
+    // function pushActivity() {
+    //     if (checkform()==0) {
+    //         $("#activityTitle").attr('placeholder',"写点啥呗")
+    //         $("#activityLabel").addClass("text-danger")
+    //         $("#myPageTop").append("<div class=\"alert alert-warning alert-dismissible fade show\" role=\"alert\">\n" +
+    //             "  <strong>无效!</strong> -->要填写必要信息哦\n" +
+    //             "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
+    //             "    <span aria-hidden=\"true\">&times;</span>\n" +
+    //             "  </button>\n" +
+    //             "</div>")
+    //         setTimeout("$('.alert').fadeOut(2000);", 3000 )
+    //         return;
+    //     }
+    //
+    //     var title=$("#activityTitle").val();
+    //     var type=$("input[name='type']:checked").val();
+    //
+    //     console.log(title)
+    //     console.log(type)
+    //
+    //     $.ajax({
+    //         type : 'post',
+    //         async : true,
+    //         url : '/titleType?title='+title+'&type='+type+'&position='+pointlnglat,
+    //         cache : false,
+    //         success : function(data) {
+    //             // $("#calendar").html(data);
+    //             // $("#loading").fadeOut();
+    //             console.log(data)
+    //             console.log(data.activityId)
+    //             $("#myPageTop").append("<div class=\"alert alert-success alert-dismissible fade show\" role=\"alert\">\n" +
+    //                 "  <strong>成功!</strong> 但完善了才能公开哦.--><a href='addDetail?activity="+data.activityId+"'>去完善</a>\n" +
+    //                 "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
+    //                 "    <span aria-hidden=\"true\">&times;</span>\n" +
+    //                 "  </button>\n" +
+    //                 "</div>")
+    //             setTimeout("$('.alert').fadeOut(2000);", 5000 )
+    //             // $('.alert').fadeOut();
+    //         },
+    //         error : function () {
+    //             $("#myPageTop").append("<div class=\"alert alert-warning alert-dismissible fade show\" role=\"alert\">\n" +
+    //                 "  <strong>错误!</strong> -->检查网络状况\n" +
+    //                 "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
+    //                 "    <span aria-hidden=\"true\">&times;</span>\n" +
+    //                 "  </button>\n" +
+    //                 "</div>")
+    //             setTimeout("$('.alert').fadeOut(2000);", 3000 )
+    //         }
+    //     });
+    // }
+</script>
+</body>
+</html>

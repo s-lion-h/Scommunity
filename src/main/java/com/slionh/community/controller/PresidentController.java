@@ -4,6 +4,7 @@ import com.slionh.community.entity.Activity;
 import com.slionh.community.entity.Community;
 import com.slionh.community.entity.Member;
 import com.slionh.community.entity.User;
+import com.slionh.community.mapper.ActivityMapper;
 import com.slionh.community.mapper.MemberMapper;
 import com.slionh.community.service.ActivityService;
 import com.slionh.community.service.CommunityService;
@@ -92,8 +93,25 @@ public class PresidentController {
     @RequestMapping("members")
     public ModelAndView toMembers(ModelAndView modelAndView,HttpServletRequest request){
         Community community = (Community) request.getSession().getAttribute("community");
+
         modelAndView.setViewName("president/members");
-        modelAndView.addObject("members",memberService.listCommunityMember(community.getIdcommunity()));
+
+        List<User> list=memberService.listCommunityMember(community.getIdcommunity());
+        modelAndView.addObject("members",list);
+
+//        System.out.println("总会议："+activityService.getCommunityReferenceAmount(community.getIdcommunity()));
+        int total=activityService.getCommunityReferenceAmount(community.getIdcommunity());
+        HashMap joins=new HashMap();
+        HashMap absences=new HashMap();
+
+        for (User user:list){
+//            System.out.println(user.getIduser()+"参与活动总数："+activityService.getActivityAmountByUserId(user.getIduser())+"参加会议数量："+activityService.getReferenceJoinAmountByUserId(user.getIduser(),community.getIdcommunity()));
+            joins.put(user.getIduser(),activityService.getActivityAmountByUserId(user.getIduser()));
+            absences.put(user.getIduser(),total-activityService.getReferenceJoinAmountByUserId(user.getIduser(),community.getIdcommunity()));
+        }
+        modelAndView.addObject("joins",joins);
+        modelAndView.addObject("absences",absences);
+        modelAndView.addObject("total",total);
 
         return modelAndView;
     }

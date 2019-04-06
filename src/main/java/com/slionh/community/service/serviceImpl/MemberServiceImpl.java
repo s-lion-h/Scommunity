@@ -120,4 +120,5 @@ public class MemberServiceImpl implements MemberService {
         memberExample.createCriteria().andCommunityidEqualTo(communityId).andUseridEqualTo(memberId);
         return memberMapper.deleteByExample(memberExample);
     }
+
 }

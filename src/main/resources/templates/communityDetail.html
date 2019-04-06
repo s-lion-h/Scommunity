@@ -62,10 +62,12 @@
             </div>
             <hr>
             <div class="row">
-                <h3>本社团的活动</h3>
-                <th:block class="row" th:each="activity:${activities}">
+                <h3>本社团的活动------</h3>
+                <a th:href="'communityMap?communityId='+${community.idcommunity}" target="_blank"><button class="btn btn-primary">本社团活动地图总览</button></a>
+                <hr>
+                <!--<th:block class="row" th:each="activity:${activities}">-->
 
-                </th:block>
+                <!--</th:block>-->
                 <table class="table table-bordered table-hover ">
                     <thead>
                     <tr>
