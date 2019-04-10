@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="This is my page">
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet">
+    <style>
+        .comment{
+            color: red;
+            font-size: 1.4em;
+        }
+        .sendCommentBtn {
+            width: 100%;
+            height: 88px;
+            resize: none;
+            font-size: 22px;
+        }
+        .diary-time {
+            font-size: .8em;
+            color: #9e9e9e;
+        }
+        .star-rating {
+            font-family: 'FontAwesome';
+            margin: 50px auto;
+        }
+        .star-rating > fieldset {
+            border: none;
+            display: inline-block;
+        }
+        .star-rating > fieldset:not(:checked) > input {
+            position: absolute;
+            top: -9999px;
+            clip: rect(0, 0, 0, 0);
+        }
+        .star-rating > fieldset:not(:checked) > label {
+            float: right;
+            width: 1em;
+            padding: 0 .05em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 200%;
+            color: #26c7fc;
+        }
+        .star-rating > fieldset:not(:checked) > label:before {
+            content: '\f006  ';
+        }
+        .star-rating > fieldset:not(:checked) > label:hover,
+        .star-rating > fieldset:not(:checked) > label:hover ~ label {
+            color: #26c7fc;
+            text-shadow: 0 0 3px #26c7fc;
+        }
+        .star-rating > fieldset:not(:checked) > label:hover:before,
+        .star-rating > fieldset:not(:checked) > label:hover ~ label:before {
+            content: '\f005  ';
+        }
+        .star-rating > fieldset > input:checked ~ label:before {
+            content: '\f005  ';
+        }
+        .star-rating > fieldset > label:active {
+            position: relative;
+            top: 2px;
+        }
+    </style>
+</head>
+<body>
+<div th:include="nav::nav"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <h2>活动内容</h2>
+            <h2 th:if="${activity.mandatory}==1" class="text-danger">（强制参加的活动）</h2>
+            <hr>
+            <h4>活动标题:</h4>
+            <p th:text="${activity.title}"></p>
+            <hr>
+            <!--<h4>活动详情:</h4>-->
+            <!--<p th:text="${activity.description}"></p>-->
+            <!--<hr>-->
+            <h4>开始时间:</h4>
+            <p th:text="${#dates.format(activity.starttime, 'yyyy年MM月dd HH:mm')}"></p>
+            <hr>
+            <h4>结束时间:</h4>
+            <p th:text="${#dates.format(activity.endtime, 'yyyy年MM月dd HH:mm')}"></p>
+            <hr>
+
+            <div class="container" style="min-height: 400px;">
+                <h2 class="text-secondary">已参加人员</h2>
+                <!--<th:block th:each="user:${members}">-->
+                    <!--<p th:text="${user.realname}"></p>-->
+                <!--</th:block>-->
+                <table class="table table-bordered table-hover ">
+                    <thead>
+                    <tr>
+                        <td>序号</td>
+                        <td>姓名</td>
+                        <td>手机</td>
+                        <td>邮箱</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="user,iter:${members}" >
+                        <tr>
+                            <td th:text="${iter.index+1}"></td>
+                            <td th:text="${user.realname}"></td>
+                            <td th:text="${user.phone}"></td>
+                            <td th:text="${user.email}"></td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-4">
+            <hr>
+            <h3 class="text-center text-danger" th:if="${generalScore} != 0" th:text="'活动总评分:'+${generalScore}"></h3>
+            <div class="">
+                <th:block th:if="${generalScore} != 0" th:each="i:${#numbers.sequence(1,generalScore)}">
+                    <i class="fas fa-star"></i>
+                </th:block>
+                <th:block th:if="${generalScore} != 0">
+                    <th:block th:if="${generalScore} != 5" th:each="j:${#numbers.sequence(generalScore+1,5)}">
+                        <i class="far fa-star"></i>
+                    </th:block>
+                </th:block>
+            </div>
+            <h3 class="text-center" th:if="${generalScore} == 0">暂未有人评分哦</h3>
+
+            <hr>
+            <h3 class="text-center">已参与人数：</h3>
+            <h3 class="text-danger text-center" th:text="${amount}+'人'"></h3>
+            <hr>
+            <th:block th:if="${session.loginUser} == null">
+                <button class='btn btn-outline-secondary' style="width: 100%;" data-toggle='modal' data-target='#myModal'>
+                    登陆之后才可以<br/>看到自己活动哦
+                </button>
+            </th:block>
+            <a href="president" class="btn btn-lg btn-block btn-primary">返回社团管理</a>
+        </div>
+    </div>
+</div>
+<script>
+</script>
+</body>
+</html>

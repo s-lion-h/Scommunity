@@ -269,5 +269,18 @@ public class ActivityServiceImpl implements ActivityService {
         return activityMapper.countByExample(activityExample);
     }
 
+    @Override
+    public List<User> listActivityUsers(Integer activityId) {
+        ActivitymemberExample activitymemberExample=new ActivitymemberExample();
+        activitymemberExample.createCriteria().andActivityidEqualTo(activityId);
+        List<Activitymember> activitymembers=activitymemberMapper.selectByExample(activitymemberExample);
+
+        List<User> users=new ArrayList<User>();
+        for (Activitymember activitymember:activitymembers){
+            users.add(userMapper.selectByPrimaryKey(activitymember.getUserid()));
+        }
+        return users;
+    }
+
 
 }

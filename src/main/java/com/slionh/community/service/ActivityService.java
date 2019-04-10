@@ -33,4 +33,5 @@ public interface ActivityService {
     Integer getActivityAmountByUserId(Integer userId);
     Integer getReferenceJoinAmountByUserId(Integer userId,Integer communityId);
     Integer getCommunityReferenceAmount(Integer communityId);
+    List<User> listActivityUsers(Integer activityId);
 }

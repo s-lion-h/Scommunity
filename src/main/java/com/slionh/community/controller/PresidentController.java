@@ -11,6 +11,7 @@ import com.slionh.community.service.CommunityService;
 import com.slionh.community.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -112,6 +113,29 @@ public class PresidentController {
         modelAndView.addObject("joins",joins);
         modelAndView.addObject("absences",absences);
         modelAndView.addObject("total",total);
+
+        return modelAndView;
+    }
+
+    @RequestMapping("activityMembers")
+    public ModelAndView activityMembers(ModelAndView modelAndView,Integer activityId,HttpServletRequest request){
+        User user= (User) request.getSession().getAttribute("loginUser");
+        if (user==null){
+//            未登录跳转首页
+            System.out.println("CommunityController : not sign in , return index");
+            modelAndView.setViewName("redirect:/");
+            return modelAndView;
+        }
+
+        Community community = (Community) request.getSession().getAttribute("community");
+
+        modelAndView.setViewName("activityMembers");
+
+        modelAndView.addObject("amount",activityService.getAmountByActivity(activityId));
+        modelAndView.addObject("generalScore",activityService.getActivityScoreAvg(activityId));
+        modelAndView.addObject("activity",activityService.getActivity(activityId));
+        modelAndView.addObject("members",activityService.listActivityUsers(activityId));
+//        modelAndView
 
         return modelAndView;
     }

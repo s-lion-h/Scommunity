@@ -3,10 +3,7 @@ package com.slionh.community.controller;
 import com.slionh.community.entity.Community;
 import com.slionh.community.entity.Webdescription;
 import com.slionh.community.mapper.NewsMapper;
-import com.slionh.community.service.BaseMsgService;
-import com.slionh.community.service.CommunityService;
-import com.slionh.community.service.NewsService;
-import com.slionh.community.service.UserService;
+import com.slionh.community.service.*;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
 
 /*
  * Create by s lion h on 2019/3/7
@@ -30,6 +29,8 @@ public class ManageController {
     private CommunityService communityService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private CommentService commentService;
 
     @RequestMapping("addNotice")
     public String toAddNotice(){
@@ -55,8 +56,18 @@ public class ManageController {
 
     @RequestMapping("communities")
     public ModelAndView toCommunities(ModelAndView modelAndView){
+        HashMap memberMap=new HashMap();
+        HashMap activityMap=new HashMap();
         modelAndView.setViewName("manage/communities");
-        modelAndView.addObject("communities",communityService.listCommunity());
+        List<Community> communities=communityService.listCommunity();
+        for (Community community:communities){
+            memberMap.put(community.getIdcommunity(),commentService.getCommunityMembersAmount(community.getIdcommunity()));
+            activityMap.put(community.getIdcommunity(),commentService.getCommunityActivitiesAmount(community.getIdcommunity()));
+        }
+        modelAndView.addObject("communities",communities);
+        modelAndView.addObject("memberMap",memberMap);
+        modelAndView.addObject("activityMap",activityMap);
+
         return modelAndView;
     }
 

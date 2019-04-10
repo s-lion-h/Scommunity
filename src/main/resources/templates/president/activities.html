@@ -27,12 +27,11 @@
                 <th:block th:each="activity:${activities}">
                     <tr>
                         <td th:text="${activity.idactivity}"></td>
-                        <td><a target="_blank" th:href="'activityDetail?activityId='+${activity.idactivity}" th:text="${activity.title}"></a</td>
-                        <!--<td th:text="${activity.starttime}"></td>-->
+                        <td><a target="_blank" th:href="'activityDetail?activityId='+${activity.idactivity}" th:text="${activity.title}"></a></td>
                         <td th:text="${#dates.format(activity.starttime, 'yyyy年MM月dd HH:mm')}"></td>
                         <td th:text="${#dates.format(activity.endtime, 'yyyy年MM月dd HH:mm')}"></td>
                         <td th:text="${activity.location}"></td>
-                        <td th:text="${amount.get(activity.idactivity)}"></td>
+                        <td><a th:href="'activityMembers?activityId='+${activity.idactivity}" th:text="'参与列表：'+${amount.get(activity.idactivity)}" class="btn btn-info"></a></td>
                         <th:block th:if="${endStatus.get(activity.idactivity)}">
                             <td><button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" th:onclick="'selectActivityId='+${activity.idactivity}+';getActivity()'">操作</button></td>
                         </th:block>

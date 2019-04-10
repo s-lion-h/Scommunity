@@ -9,4 +9,7 @@ import com.slionh.community.entity.Newscomment;
 public interface CommentService {
     Integer addActivityComment(Activitycomment activitycomment);
     Integer addNewsComment(Newscomment newscomment);
+    Integer getCommunityMembersAmount(Integer communityId);
+    Integer getCommunityActivitiesAmount(Integer communityId);
+
 }

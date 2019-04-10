@@ -12,13 +12,14 @@
             <hr>
         </div>
         <div class="col-12">
-            <table class="table table-bordered table-hover ">
+            <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
                     <td>id</td>
                     <td>社团名称</td>
                     <td>社长</td>
-                    <td>添加者</td>
+                    <td>社团总人数</td>
+                    <td>社团活动数</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -27,7 +28,8 @@
                         <td th:text="${community.idcommunity}"></td>
                         <td th:text="${community.name}"></td>
                         <td th:text="${community.other}"></td>
-                        <td>管理员</td>
+                        <td th:text="${memberMap.get(community.idcommunity)}"></td>
+                        <td th:text="${activityMap.get(community.idcommunity)}"></td>
                         <td><button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" th:onclick="'selectCommunityId='+${community.idcommunity}+';getCommunity()'">操作</button></td>
                     </tr>
                 </th:block>
