@@ -153,6 +153,7 @@
         var str=[[${activities}]][i].position;
         var positionXY=str.split(",");
         var type=[[${activities}]][i].title;
+        var id=[[${activities}]][i].idactivity;
         // var text="<a href='activityDetail?activityId=6'>"+type+"</a>"
         // console.log(text)
         console.log(positionXY)
@@ -163,6 +164,8 @@
             text:type,
             textAlign:'center', // 'left' 'right', 'center',
             verticalAlign:'middle', //middle 、bottom
+            clickable:true,
+
             // draggable:true,
             // cursor:'pointer',
             angle:10,
@@ -173,6 +176,11 @@
             },
             position: positionXY
         });
+        text2.on('click',function (e) {
+            console.log(id)
+            console.log(e)
+            window.open('/activityDetail?activityId='+id,'_blank');
+        })
         text2.setMap(map);
     }
     // console.log([[${activity}]][1].position)

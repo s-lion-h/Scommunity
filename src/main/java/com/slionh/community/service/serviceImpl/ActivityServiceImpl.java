@@ -223,10 +223,10 @@ public class ActivityServiceImpl implements ActivityService {
         for (Activitymember activitymember:list){
             join.add(activityMapper.selectByPrimaryKey(activitymember.getActivityid()));
         }
-        for(Activity activity:join){
-            activity.setPosition(communityMapper.selectByPrimaryKey(activity.getCommunityid()).getName());
-            joined.add(activity);
-        }
+//        for(Activity activity:join){
+//            activity.setPosition(communityMapper.selectByPrimaryKey(activity.getCommunityid()).getName());
+//            joined.add(activity);
+//        }
         return joined;
     }
 
