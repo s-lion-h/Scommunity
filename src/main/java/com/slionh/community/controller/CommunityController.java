@@ -40,6 +40,7 @@ public class CommunityController implements Configuration {
     public ModelAndView addCommunity(HttpServletRequest request, ModelAndView modelAndView, @RequestParam("headImage") MultipartFile headImage, Community community,User president) throws IOException {
         System.out.println(community.toString());
         System.out.println(president.toString());
+        president.setOther("1");
         User user= (User) request.getSession().getAttribute("loginUser");
 //        if (1==2){
         if (user==null){

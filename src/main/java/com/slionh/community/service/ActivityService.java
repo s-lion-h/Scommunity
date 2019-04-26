@@ -29,7 +29,7 @@ public interface ActivityService {
     Integer setActivityScore(Activitymember activitymember);
     List<Activity> listUsersActivity(Integer userId);
 
-//    参与所有活动的数量，不局限于自己社团
+//    参j与所有活动的数量，不局限于自己社团
     Integer getActivityAmountByUserId(Integer userId);
     Integer getReferenceJoinAmountByUserId(Integer userId,Integer communityId);
     Integer getCommunityReferenceAmount(Integer communityId);

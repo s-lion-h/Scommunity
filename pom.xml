@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.slionh</groupId>
     <artifactId>community</artifactId>
-    <version>3.4.2-SNAPSHOT</version>
+    <version>4.4.3-SNAPSHOT</version>
     <name>community</name>
     <description>Demo project for Spring Boot</description>
 
